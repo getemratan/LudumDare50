@@ -12,7 +12,7 @@ namespace ClimateManagement
         [SerializeField] private LevelGrid levelGrid = default;
         [SerializeField] private TileListSO tileListSO = default; 
 
-        private TileType currentTileType;
+        private TileType currentTileType = TileType.None;
 
         private void Awake()
         {

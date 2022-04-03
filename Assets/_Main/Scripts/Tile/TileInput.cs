@@ -11,7 +11,7 @@ namespace ClimateManagement
         private Tile prevTile;
         private Tile currTile;
 
-        private TileType currentTileType;
+        private TileType currentTileType = TileType.None;
 
         private void Awake()
         {

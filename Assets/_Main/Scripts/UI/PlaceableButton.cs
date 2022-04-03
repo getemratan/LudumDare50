@@ -23,6 +23,7 @@ namespace ClimateManagement
 
         public void OnPlaceableButtonClicked()
 		{
+			transform.DOScale(originalScale, tweenDelay).SetEase(Ease.Linear);
 			transform.GetChild(0).gameObject.SetActive(true);
 			OnTileTypeSelected?.Invoke(tileType);
 		}

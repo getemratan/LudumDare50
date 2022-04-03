@@ -47,6 +47,7 @@ public class Tile : MonoBehaviour
 
 public enum TileType
 {
+    None,
     Tree,
     House,
     WasteCollection,
