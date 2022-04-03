@@ -376,8 +376,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHex: 1
-  rows: 30
-  columns: 30
+  rows: 2
+  columns: 2
   tileSize: {x: 1.73, y: 2}
   defaultTilePrefabs:
   - {fileID: 3608108833063340284, guid: 917f8914c804b6b43ad0d47399fee343, type: 3}
