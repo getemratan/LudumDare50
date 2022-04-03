@@ -3,20 +3,21 @@ using UnityEngine;
 
 namespace ClimateManagement
 {
-	public class TileInput : MonoBehaviour
-	{
+    public class TileInput : MonoBehaviour
+    {
         public static event Action<Tile> OnTileSelected;
         public static event Action<Tile> OnTileHover;
 
         private Tile prevTile;
         private Tile currTile;
-        
+
         private void Update()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
             {
-                if (hit.transform.TryGetComponent(out Tile tile))
+                Tile tile;
+                if (hit.transform.TryGetComponent(out tile) || hit.transform.TryGetComponentInParent(out tile))
                 {
                     HandleTileHover(tile);
                     HandleTileSelection(tile);

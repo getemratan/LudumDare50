@@ -17,8 +17,8 @@ public class TileGenerator : MonoBehaviour
     private void Start()
     {
         CalcOffset();
-        //Generate();
-        GenerateHexagonSet();
+        Generate();
+        //GenerateHexagonSet();
     }
 
     private void CalcOffset()

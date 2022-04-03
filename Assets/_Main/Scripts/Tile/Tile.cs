@@ -7,14 +7,14 @@ public class Tile : MonoBehaviour
     public int tileId = default;
     [SerializeField] private MeshRenderer grassRenderer = default;
     [SerializeField] private int grassMatIndex = default;
-    [SerializeField] private GrassColors grassColors = default;
     [SerializeField] private float animateTime = default;
+    [SerializeField] private GrassColors grassColors = default;
 
     private MaterialPropertyBlock propertyBlock;
 
     private void Awake()
     {
-        UpdateGrassColor();
+        //UpdateGrassColor();
         AnimateChildren();
     }
 
@@ -37,6 +37,6 @@ public class Tile : MonoBehaviour
         int rColor = Random.Range(0, grassColors.colors.Count);
         propertyBlock.SetColor("_BaseColor", grassColors.colors[rColor]);
 
-        grassRenderer.SetPropertyBlock(propertyBlock);
+        grassRenderer.SetPropertyBlock(propertyBlock, grassMatIndex);
     }
 }
