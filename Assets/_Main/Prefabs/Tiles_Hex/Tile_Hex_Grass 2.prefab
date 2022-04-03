@@ -63,6 +63,7 @@ MonoBehaviour:
   grassMatIndex: 1
   animateTime: 0.5
   grassColors: {fileID: 11400000, guid: cd337987c2ba54a4bb6ba1cfa91e77a2, type: 2}
+  repleaceableTileTypes: 0000000003000000
 --- !u!1001 &2581297960550375017
 PrefabInstance:
   m_ObjectHideFlags: 0

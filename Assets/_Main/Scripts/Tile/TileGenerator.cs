@@ -16,9 +16,9 @@ public class TileGenerator : MonoBehaviour
 
     private void Start()
     {
-        CalcOffset();
+        //CalcOffset();
         Generate();
-        //GenerateHexagonSet();
+        GenerateHexagonSet();
     }
 
     private void CalcOffset()
@@ -81,7 +81,7 @@ public class TileGenerator : MonoBehaviour
         return new Vector3(x, 0, z);
     }
 
-    private void GenerateHexagonSet(int sides = 1)
+    private void GenerateHexagonSet(int sides = 0)
     {
         int middleColumn = sides + 1;
         int sideRowLength = sides + 2;

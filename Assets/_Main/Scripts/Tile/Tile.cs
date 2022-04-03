@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using ClimateManagement;
 
 public class Tile : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class Tile : MonoBehaviour
     [SerializeField] private int grassMatIndex = default;
     [SerializeField] private float animateTime = default;
     [SerializeField] private GrassColors grassColors = default;
+    [SerializeField] private List<TileType> repleaceableTileTypes = default;
 
     private MaterialPropertyBlock propertyBlock;
+
+    public List<TileType> ReplaceableTilesTypes { get => repleaceableTileTypes; }
 
     private void Awake()
     {
@@ -39,4 +43,12 @@ public class Tile : MonoBehaviour
 
         grassRenderer.SetPropertyBlock(propertyBlock, grassMatIndex);
     }
+}
+
+public enum TileType
+{
+    Tree,
+    House,
+    WasteCollection,
+    Windmill
 }

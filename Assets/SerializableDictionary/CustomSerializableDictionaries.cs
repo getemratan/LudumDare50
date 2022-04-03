@@ -12,3 +12,10 @@ public class StringGameObjectDictionary : SerializableDictionary<string, GameObj
 [Serializable]
 public class StringIntDictionary : SerializableDictionary<string, int> { }
 
+[Serializable]
+public class TileTypeTileListDictionary : SerializableDictionary<TileType, List<Tile>, TileListStorage> { }
+
+[Serializable]
+public class TileListStorage : SerializableDictionary.Storage<List<Tile>> { }
+
+
