@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float movementTime = default;
     [SerializeField] private Transform camTransform = default;
     [SerializeField] private Vector3 zoomAmount = default;
+    [SerializeField] private Vector2 panLimit = default;
 
     private float movementSpeed;
     private Vector3 newPos;
@@ -56,9 +57,13 @@ public class CameraController : MonoBehaviour
             newZoom += Input.mouseScrollDelta.y * zoomAmount;
             newZoom = new Vector3(0, Mathf.Clamp(newZoom.y, 24, 60), Mathf.Clamp(newZoom.z, -100f, -40f));
         }
+
+        newPos.x = Mathf.Clamp(newPos.x, -panLimit.x, panLimit.x);
+        newPos.z = Mathf.Clamp(newPos.z, -panLimit.y, panLimit.y);
+
         transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime * movementTime);
         transform.rotation = Quaternion.Lerp(transform.rotation, newRot, Time.deltaTime * movementTime);
-        
+
         camTransform.localPosition = Vector3.Lerp(camTransform.localPosition, newZoom, Time.deltaTime * movementTime);
     }
 }
