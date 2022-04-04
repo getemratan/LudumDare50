@@ -226,6 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1102518633}
   - component: {fileID: 1102518632}
+  - component: {fileID: 1102518634}
   - component: {fileID: 1102518631}
   - component: {fileID: 1102518630}
   - component: {fileID: 1102518629}
@@ -279,7 +280,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102518628}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b002f362b97268a4e9e4b581c465cb23, type: 3}
   m_Name: 
@@ -324,6 +325,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1102518634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102518628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a19c5b3fdf2f384d8199e9214f7b76f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapRadius: 2
+  tileSize: {x: 1.73, y: 2}
+  tilePrefabs:
+  - {fileID: 3608108833063340284, guid: 1ea37adca7abd274d94b76cc43a9b7e3, type: 3}
+  - {fileID: 3608108833063340284, guid: 917f8914c804b6b43ad0d47399fee343, type: 3}
+  - {fileID: 3608108833063340284, guid: 63ee8188f5a8c6f458b01a3682917b31, type: 3}
+  - {fileID: 3608108833063340284, guid: a38a741d6d051984b9bdcd7a88063573, type: 3}
+  - {fileID: 3608108833063340284, guid: 3dd60975afe9a9d4f947a0dcd96018be, type: 3}
+  - {fileID: 3608108833063340284, guid: 72eb21ed446e81742ba9f86a094b91ef, type: 3}
+  - {fileID: 3608108833063340284, guid: 669816c370b5a5e48b633a5692368023, type: 3}
+  tileCoords: []
 --- !u!1 &1246597981
 GameObject:
   m_ObjectHideFlags: 0

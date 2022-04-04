@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 [CreateAssetMenu(fileName = "TileList", menuName = "Tile/TileList")]
-public class TileListSO : ScriptableObject
+public class TileListSO : SerializedScriptableObject
 {
-    public TileTypeTileListDictionary TileTypeLists;
+    public Dictionary<TileType, TileTypeList> TileTypeLists;
 }
 
 [Serializable]

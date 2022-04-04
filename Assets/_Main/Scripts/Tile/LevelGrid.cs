@@ -19,9 +19,9 @@ public class LevelGrid : MonoBehaviour
 
     public void ReplaceTile(Tile tile, Tile replaceTile)
     {
-        int tileIndex = tiles.IndexOf(tile);
-        tiles.RemoveAt(tileIndex);
-        tiles.Insert(tileIndex, replaceTile);
+        //int tileIndex = tiles.IndexOf(tile);
+        //tiles.RemoveAt(tileIndex);
+        //tiles.Insert(tileIndex, replaceTile);
 
         replaceTile.transform.position = tile.transform.position;
         replaceTile.transform.SetParent(transform);

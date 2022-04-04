@@ -10,7 +10,7 @@ namespace ClimateManagement
 	{
         [SerializeField] private List<Tile> replaceTilePrefabs = default;
         [SerializeField] private LevelGrid levelGrid = default;
-        [SerializeField] private TileListSO tileListSO = default; 
+        //[SerializeField] private TileListSO tileListSO = default; 
 
         private TileType currentTileType = TileType.None;
 
@@ -38,8 +38,8 @@ namespace ClimateManagement
 
         private void OnTileSelected(Tile tile)
         {
-            int rTile = UnityEngine.Random.Range(0, tileListSO.TileTypeLists[currentTileType].Count);
-            Tile replaceTile = Instantiate(tileListSO.TileTypeLists[currentTileType][rTile]);
+            int rTile = UnityEngine.Random.Range(0, replaceTilePrefabs.Count);
+            Tile replaceTile = Instantiate(replaceTilePrefabs[rTile]);
             levelGrid.ReplaceTile(tile, replaceTile);
         }
 

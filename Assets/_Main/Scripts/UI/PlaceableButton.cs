@@ -32,7 +32,7 @@ namespace ClimateManagement
         {
 			if (transform.GetChild(0).gameObject.activeInHierarchy)
             {
-				CursorManager.Instance.SetActiveCursorType(CursorType.CantSelect);
+				//CursorManager.Instance.SetActiveCursorType(CursorType.CantSelect);
             }
             else
             {
@@ -44,7 +44,7 @@ namespace ClimateManagement
 		{
 			if (transform.GetChild(0).gameObject.activeInHierarchy)
 			{
-				CursorManager.Instance.SetActiveCursorType(CursorType.Arrow);
+				//CursorManager.Instance.SetActiveCursorType(CursorType.Arrow);
 			}
 			transform.DOScale(originalScale, tweenDelay).SetEase(Ease.Linear);
 		}

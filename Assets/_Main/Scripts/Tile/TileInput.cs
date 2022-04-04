@@ -31,13 +31,13 @@ namespace ClimateManagement
                 Tile tile;
                 if (hit.transform.TryGetComponent(out tile) || hit.transform.TryGetComponentInParent(out tile))
                 {
-                    HandleTileHover(tile);
+                    //HandleTileHover(tile);
                     HandleTileSelection(tile);
                 }
             }
             else
             {
-                CursorManager.Instance.SetActiveCursorType(CursorType.Arrow);
+                //CursorManager.Instance.SetActiveCursorType(CursorType.Arrow);
                 currTile = null;
                 prevTile = null;
             }
@@ -75,11 +75,11 @@ namespace ClimateManagement
         {
             if (tile.ReplaceableTilesTypes.Count > 0 && tile.ReplaceableTilesTypes.Contains(currentTileType))
             {
-                CursorManager.Instance.SetActiveCursorType(CursorType.Replace);
+                //CursorManager.Instance.SetActiveCursorType(CursorType.Replace);
             }
             else
             {
-                CursorManager.Instance.SetActiveCursorType(CursorType.CantSelect);
+                //CursorManager.Instance.SetActiveCursorType(CursorType.CantSelect);
             }
         }
 

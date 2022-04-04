@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ClimateManagement
 {
-    public class CursorManager : Singleton<CursorManager>
+    public class CursorManager : MonoBehaviour
     {
         public static event Action<CursorType> OnCursorChanged;
         public class OnCursorChangedEventArgs : EventArgs
@@ -20,11 +20,6 @@ namespace ClimateManagement
         private int currentFrame;
         private float frameTimer;
         private int frameCount;
-
-        public override void Awake()
-        {
-            base.Awake();
-        }
 
         private void OnDestroy()
         {
@@ -43,7 +38,7 @@ namespace ClimateManagement
             {
                 frameTimer += cursorAnimation.frameRate;
                 currentFrame = (currentFrame + 1) % frameCount;
-                Cursor.SetCursor(cursorAnimation.textureArray[currentFrame], cursorAnimation.offset, CursorMode.Auto);
+                //Cursor.SetCursor(cursorAnimation.textureArray[currentFrame], cursorAnimation.offset, CursorMode.Auto);
             }
         }
 

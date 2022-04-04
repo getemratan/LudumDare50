@@ -30,7 +30,7 @@ public class TileGenerator : MonoBehaviour
                 offset = tileSize.x / 2f;
 
             float x = -tileSize.x * (rows / 2f) - offset;
-            float y = tileSize.y * 0.95f * (columns / 2f);
+            float y = tileSize.y * 0.75f * (columns / 2f);
             gridOffset = new Vector2(x, y);
         }
         else
@@ -68,7 +68,7 @@ public class TileGenerator : MonoBehaviour
             spacing = tileSize.y / 2f;
 
         float x = gridOffset.x + pos.x * tileSize.x;
-        float z = gridOffset.y - pos.z * tileSize.y * 0.95f + spacing;
+        float z = gridOffset.y - pos.z * tileSize.y * 0.75f + spacing;
 
         return new Vector3(x, 0, z);
     }

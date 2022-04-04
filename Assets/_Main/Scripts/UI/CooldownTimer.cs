@@ -45,7 +45,7 @@ namespace ClimateManagement
         {
             timerTime = maxTime;
             timerIsRunning = true;
-            CursorManager.Instance.SetActiveCursorType(CursorType.CantSelect);
+            //CursorManager.Instance.SetActiveCursorType(CursorType.CantSelect);
             GetComponentInParent<Button>().interactable = false;
         }
     }
