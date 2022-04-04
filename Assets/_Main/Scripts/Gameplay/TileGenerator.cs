@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Linq;
 
 namespace ClimateManagement
 {
-    public class TileGenerator : MonoBehaviour
+    public class TileGenerator : SerializedMonoBehaviour
     {
         [SerializeField] private TileDatabase tileDatabase = default;
         [SerializeField] private float tileWidth = default;
@@ -16,14 +17,16 @@ namespace ClimateManagement
 
         private List<Tile> tempTiles;
         private List<Tile> allTiles;
-        public Dictionary<int, List<Tile>> tileDictionary;
+        public Dictionary<int, List<Tile>> ringTiles;
+        public Dictionary<int, List<Tile>> stageTiles;
 
         private int currRingIndex;
         private int currStage;
 
         private void Awake()
         {
-            tileDictionary = new Dictionary<int, List<Tile>>();
+            ringTiles = new Dictionary<int, List<Tile>>();
+            stageTiles = new Dictionary<int, List<Tile>>();
             tempTiles = new List<Tile>();
             allTiles = new List<Tile>();
             TileController.OnStageUpdate += OnStageUpdate;
@@ -34,7 +37,7 @@ namespace ClimateManagement
             TileController.OnStageUpdate -= OnStageUpdate;
         }
 
-        void Start()
+        private void Start()
         {
             CreateFirstTile();
             CreateFirstRing();
@@ -43,6 +46,19 @@ namespace ClimateManagement
             currStage = 1;
 
             CreateRings(initialRingCount);
+        }
+
+        public Tile GetRandomTree()
+        {
+            List<Tile> trees = new List<Tile>();
+            trees = allTiles.FindAll(x => x is Tree);
+
+            if(trees != null && trees.Count > 0)
+            {
+                int r = Utils.GetRandomValue(0, trees.Count);
+                return trees[r];
+            }
+            return null;
         }
 
         private void OnStageUpdate()
@@ -55,16 +71,17 @@ namespace ClimateManagement
             if (currStage < maxStages)
             {
                 currStage++;
-                CreateRings(ringCount);
+                CacheStage(currStage, CreateRings(ringCount));
             }
         }
 
-        private void CreateRings(int ringCount)
+        private List<Tile> CreateRings(int ringCount)
         {
+            List<Tile> tiles = new List<Tile>();
             for (int r = 0; r < ringCount; r++)
             {
-                tileDictionary.TryGetValue(tileDictionary.Count - 1, out List<Tile> prevTiles);
-                tileDictionary.TryGetValue(tileDictionary.Count - 2, out List<Tile> pivotTiles);
+                ringTiles.TryGetValue(ringTiles.Count - 1, out List<Tile> prevTiles);
+                ringTiles.TryGetValue(ringTiles.Count - 2, out List<Tile> pivotTiles);
                 Tile pivotTile = pivotTiles[0];
 
                 int pivotIndex = allTiles.IndexOf(pivotTile);
@@ -83,14 +100,16 @@ namespace ClimateManagement
 
                     if (Mathf.RoundToInt(angle1) % 60 == 0)
                     {
-                        CreateCornerTile(currRingIndex - 1, currTile.transform.position);
+                        Tile cornerTile = CreateCornerTile(currRingIndex - 1, currTile.transform.position);
+                        tiles.Add(cornerTile);
                     }
 
                     pivotTile = allTiles[finalIndex];
                     Vector3 diff = (nextTile.transform.position + currTile.transform.position) * 0.5f;
                     diff.x += diff.x - pivotTile.transform.position.x;
                     diff.z += diff.z - pivotTile.transform.position.z;
-                    SpawnTile(diff);
+                    Tile tile = SpawnTile(diff);
+                    tiles.Add(tile);
 
                     if (Mathf.RoundToInt(angle2) % 60 != 0 && currRingIndex > 1)
                     {
@@ -103,16 +122,17 @@ namespace ClimateManagement
                 tempTiles.Clear();
                 currRingIndex++;
             }
+            return tiles;
         }
 
-        private void CreateCornerTile(int ringIndex, Vector3 prevTilePos)
+        private Tile CreateCornerTile(int ringIndex, Vector3 prevTilePos)
         {
             float d = Vector3.Distance(transform.position, prevTilePos) / ringIndex;
             float prevTileAngle = Mathf.Atan2(prevTilePos.z, prevTilePos.x);
 
             prevTilePos.x += d * Mathf.Cos(prevTileAngle);
             prevTilePos.z += d * Mathf.Sin(prevTileAngle);
-            SpawnTile(prevTilePos);
+           return SpawnTile(prevTilePos);
         }
 
         private void CreateFirstRing()
@@ -127,28 +147,59 @@ namespace ClimateManagement
                 angle += angleOffset;
             }
             CacheRing(1);
+            CacheStage(currStage, tempTiles);
             tempTiles.Clear();
         }
 
         private void CreateFirstTile()
         {
-            SpawnTile(transform.position);
+            Tile initTile = SpawnTile(transform.position);
             CacheRing(0);
+
+            List<Tile> tiles = new List<Tile>();
+            tiles.Add(initTile);
+            CacheStage(currStage, tiles);
             tempTiles.Clear();
         }
 
         private void CacheRing(int ringId)
         {
-            tileDictionary.Add(ringId, new List<Tile>(tempTiles));
+            ringTiles.Add(ringId, new List<Tile>(tempTiles));
         }
 
-        private void SpawnTile(Vector3 tilePos)
+        private void CacheStage(int stageId, List<Tile> tiles)
+        {
+            if (!stageTiles.ContainsKey(stageId))
+            {
+                stageTiles.Add(stageId, new List<Tile>());
+            }
+
+            stageTiles.TryGetValue(stageId, out List<Tile> sTiles);
+            for (int i = 0; i < tiles.Count; i++)
+            {
+                sTiles.Add(tiles[i]);
+            }
+        }
+
+        private Tile SpawnTile(Vector3 tilePos)
         {
             int rTile = UnityEngine.Random.Range(0, tileDatabase.baseTilePrefabs.Count);
             Tile tile = Instantiate(tileDatabase.baseTilePrefabs[rTile], transform);
             tile.transform.position = tilePos;
             tempTiles.Add(tile);
             allTiles.Add(tile);
+            return tile;
+        }
+
+        public void ReplaceTile(Tile tile, Tile replaceTilePrefab)
+        {
+            tile.gameObject.SetActive(false);
+            Tile replaceTile = Instantiate(replaceTilePrefab, transform);
+            replaceTile.transform.position = tile.transform.position;
+
+            int index = allTiles.IndexOf(tile);
+            allTiles.RemoveAt(index);
+            allTiles.Insert(index, replaceTile);
         }
     }
 }

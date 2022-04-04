@@ -292,6 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileDatabase: {fileID: 11400000, guid: 4d8b612b41ebe8849916e44305be3c33, type: 2}
   tileGenerator: {fileID: 1102518631}
+  popupTimer: 5
 --- !u!114 &1102518630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,13 +317,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a19c5b3fdf2f384d8199e9214f7b76f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: ringTiles
+      Entry: 7
+      Data: 0|UnityEngine.Rendering.SerializedDictionary`2[[System.Int32, mscorlib],[System.Collections.Generic.List`1[[ClimateManagement.Tile,
+        Assembly-CSharp]], mscorlib]], Unity.RenderPipelines.Core.Runtime
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: stageTiles
+      Entry: 7
+      Data: 2|UnityEngine.Rendering.SerializedDictionary`2[[System.Int32, mscorlib],[System.Collections.Generic.List`1[[ClimateManagement.Tile,
+        Assembly-CSharp]], mscorlib]], Unity.RenderPipelines.Core.Runtime
+    - Name: comparer
+      Entry: 9
+      Data: 1
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   tileDatabase: {fileID: 11400000, guid: 4d8b612b41ebe8849916e44305be3c33, type: 2}
   tileWidth: 1.73
-  initialRingCount: 0
+  initialRingCount: 1
   ringCount: 2
   maxStages: 5
-  currRingIndex: 0
-  currStage: 0
 --- !u!4 &1102518633
 Transform:
   m_ObjectHideFlags: 0
