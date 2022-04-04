@@ -6,6 +6,10 @@ namespace ClimateManagement
 {
     public class Tile : MonoBehaviour
     {
+        [SerializeField] private List<TileType> repleaceableTileTypes = default;
+
+        public List<TileType> ReplaceableTilesTypes { get => repleaceableTileTypes; }
+
         private float animateTime = default;
 
         private void Awake()
@@ -24,5 +28,14 @@ namespace ClimateManagement
                 child.DOScale(childScale, 0.3f).SetDelay(i * (animateTime / (float)transform.childCount));
             }
         }
+    }
+
+    public enum TileType
+    {
+        None,
+        Tree,
+        House,
+        WasteCollection,
+        Windmill
     }
 }

@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd1fa9463bb94de42a64f240ad632f17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileController: {fileID: 0}
 --- !u!114 &1125531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,17 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b002f362b97268a4e9e4b581c465cb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHex: 0
-  rows: 10
-  columns: 10
-  tileSize: {x: 2, y: 2}
-  defaultTilePrefabs:
-  - {fileID: -1334092873060906383, guid: 05c86ea3acc6a764d8990d8f8b1e368d, type: 3}
-  - {fileID: -1334092873060906383, guid: 562760d26f7eb024085f0eef249129fa, type: 3}
-  - {fileID: -1334092873060906383, guid: 59bbde6314ca2944397676b0e6f602b4, type: 3}
-  - {fileID: -1334092873060906383, guid: be3ae67c8f1a67b4db9914f1b53190d7, type: 3}
-  levelGrid: {fileID: 1125533}
-  gridOffset: {x: 0, y: 0}
 --- !u!114 &1125532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +196,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileDatabase: {fileID: 0}
   tileGenerator: {fileID: 0}
+  tileListSO: {fileID: 0}
+  popupTime: 0
+  mapTime: 0
 --- !u!114 &1125533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85bc829c55302fe47a4f6ccf72539c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiles: []
 --- !u!1 &12008484
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,7 +531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3236563819204236540, guid: 84cdb174476bab1419ca70a08713065e, type: 3}
       propertyPath: tileType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84cdb174476bab1419ca70a08713065e, type: 3}
@@ -1131,10 +1123,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1102518633}
-  - component: {fileID: 1102518632}
-  - component: {fileID: 1102518631}
   - component: {fileID: 1102518630}
   - component: {fileID: 1102518629}
+  - component: {fileID: 1102518631}
   m_Layer: 0
   m_Name: TileController (1)
   m_TagString: Untagged
@@ -1154,8 +1145,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7186b8e7caa7cd44a99f0189a5c36cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileDatabase: {fileID: 0}
-  tileGenerator: {fileID: 0}
+  tileDatabase: {fileID: 11400000, guid: 4d8b612b41ebe8849916e44305be3c33, type: 2}
+  tileGenerator: {fileID: 1102518631}
+  tileListSO: {fileID: 11400000, guid: 0513f3185b0e85e4299a6a812fe11e8f, type: 2}
+  popupTime: 0
+  mapTime: 0
 --- !u!114 &1102518630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1168,6 +1162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd1fa9463bb94de42a64f240ad632f17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileController: {fileID: 1102518629}
 --- !u!114 &1102518631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1177,34 +1172,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1102518628}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b002f362b97268a4e9e4b581c465cb23, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a19c5b3fdf2f384d8199e9214f7b76f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHex: 1
-  rows: 2
-  columns: 2
-  tileSize: {x: 1.73, y: 2}
-  defaultTilePrefabs:
-  - {fileID: 3608108833063340284, guid: 917f8914c804b6b43ad0d47399fee343, type: 3}
-  - {fileID: 3608108833063340284, guid: 888cf2fdf6ddd7b43a665c0a1db7f012, type: 3}
-  - {fileID: 3608108833063340284, guid: a341dff7468013d41b14f3735553db78, type: 3}
-  - {fileID: 3608108833063340284, guid: ac54eb06949ae6f4ba8e29c697e1c012, type: 3}
-  - {fileID: 3608108833063340284, guid: 72eb21ed446e81742ba9f86a094b91ef, type: 3}
-  levelGrid: {fileID: 1102518632}
-  gridOffset: {x: 0, y: 0}
---- !u!114 &1102518632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1102518628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85bc829c55302fe47a4f6ccf72539c09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tiles: []
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: ringTiles
+      Entry: 6
+      Data: 
+  tileDatabase: {fileID: 11400000, guid: 4d8b612b41ebe8849916e44305be3c33, type: 2}
+  tileWidth: 1.73
+  initialRingCount: 0
+  ringCount: 2
+  maxStages: 5
 --- !u!4 &1102518633
 Transform:
   m_ObjectHideFlags: 0
@@ -1694,15 +1681,7 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 22a63382fa6928f43bbb1300200bb90a, type: 3}
     - {fileID: 2800000, guid: 352c1d0cde7ce89459501d4d5e4cc8dc, type: 3}
     frameRate: 0.5
-    offset: {x: 0, y: 0}
-  cursorAnimation:
-    cursorType: 0
-    textureArray: []
-    frameRate: 0
-    offset: {x: 0, y: 0}
-  currentFrame: 0
-  frameTimer: 0
-  frameCount: 0
+    offset: {x: 0, y: 700}
 --- !u!4 &2122265410
 Transform:
   m_ObjectHideFlags: 0
@@ -1818,7 +1797,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3236563819204236540, guid: 84cdb174476bab1419ca70a08713065e, type: 3}
       propertyPath: tileType
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84cdb174476bab1419ca70a08713065e, type: 3}

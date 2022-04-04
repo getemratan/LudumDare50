@@ -13,8 +13,13 @@ namespace ClimateManagement
 
         [SerializeField] private TileDatabase tileDatabase = default;
         [SerializeField] private TileGenerator tileGenerator = default;
+        [SerializeField] private TileListSO tileListSO = default;
         [SerializeField] private float popupTime = default;
         [SerializeField] private float mapTime = default;
+
+        private TileType currentTileType = TileType.None;
+
+        public TileType CurrentTileType { get => currentTileType; }
 
         private bool hasStarted;
         private float popupTimer;
@@ -25,6 +30,7 @@ namespace ClimateManagement
             GameManager.OnGameStart += OnGameStart;
             TileInput.OnTileHover += OnTileHover;
             TileInput.OnTileSelected += OnTileSelected;
+            PlaceableButton.OnTileTypeSelected += SetNewCurrentTileType;
             popupTimer = popupTime;
         }
 
@@ -33,6 +39,7 @@ namespace ClimateManagement
             GameManager.OnGameStart -= OnGameStart;
             TileInput.OnTileHover -= OnTileHover;
             TileInput.OnTileSelected -= OnTileSelected;
+            PlaceableButton.OnTileTypeSelected -= SetNewCurrentTileType;
         }
 
         private void Update()
@@ -84,8 +91,16 @@ namespace ClimateManagement
         {
             if (tile is IReplaceableTile)
             {
-                int r = Utils.GetRandomValue(0, tileDatabase.replaceTiles.Count);
-                tileGenerator.ReplaceTile(tile, tileDatabase.replaceTiles[r]);
+                int r = Utils.GetRandomValue(0, tileListSO.TileTypeLists[currentTileType].Count);
+                tileGenerator.ReplaceTile(tile, tileListSO.TileTypeLists[currentTileType][r]);
+            }
+        }
+
+        private void SetNewCurrentTileType(TileType newTileType)
+        {
+            if (currentTileType != newTileType)
+            {
+                currentTileType = newTileType;
             }
         }
 

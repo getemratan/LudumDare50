@@ -5,6 +5,8 @@ namespace ClimateManagement
 {
     public class TileInput : MonoBehaviour
     {
+        [SerializeField] private TileController tileController = default;
+
         public static event Action<Tile> OnTileSelected;
         public static event Action<Tile> OnTileHover;
 
@@ -25,6 +27,7 @@ namespace ClimateManagement
             }
             else
             {
+                CursorManager.Instance.SetActiveCursorType(CursorType.Arrow);
                 currTile = null;
                 prevTile = null;
             }
@@ -44,6 +47,7 @@ namespace ClimateManagement
             if (prevTile == null)
             {
                 prevTile = currTile;
+                HandleCursorType(tile);
                 OnTileHover?.Invoke(tile);
             }
             else
@@ -51,8 +55,21 @@ namespace ClimateManagement
                 if (currTile != prevTile)
                 {
                     prevTile = currTile;
+                    HandleCursorType(tile);
                     OnTileHover?.Invoke(tile);
                 }
+            }
+        }
+
+        private void HandleCursorType(Tile tile)
+        {
+            if (tile.ReplaceableTilesTypes.Count > 0 && tile.ReplaceableTilesTypes.Contains(tileController.CurrentTileType))
+            {
+                CursorManager.Instance.SetActiveCursorType(CursorType.Replace);
+            }
+            else
+            {
+                CursorManager.Instance.SetActiveCursorType(CursorType.CantSelect);
             }
         }
     }
