@@ -7,45 +7,39 @@ using TMPro;
 
 namespace ClimateManagement
 {
-	public class PlaceableButton : MonoBehaviour
+	public class SelectableButton : MonoBehaviour
 	{
-		public static event Action<TileType> OnTileTypeSelected;
+		public static event Action<int, TileType> OnTileAmountUpdated;
 
 		[SerializeField] private Vector3 finalScale = default;
 		[SerializeField] private float tweenDelay = default;
 		[SerializeField] private TileType tileType = default;
 		[SerializeField] private TextMeshProUGUI amount = default;
-		[SerializeField] private int defaultAmount = default;
 
 		private Vector3 originalScale;
 
-		public TileType TileType { get => tileType; }
+		public int Amount { get; set; }
 
 		private void Start()
 		{
+			amount.text = $"+{Amount}";
 			originalScale = transform.localScale;
-			amount.text = defaultAmount.ToString();
 		}
 
-		public void OnPlaceableButtonClicked()
+		public void OnSelectableButtonClicked()
 		{
 			transform.DOScale(originalScale, tweenDelay).SetEase(Ease.Linear);
-			OnTileTypeSelected?.Invoke(tileType);
+			OnTileAmountUpdated?.Invoke(Amount, tileType);
 		}
 
-		public void OnPointerEntered()
+		public void OnSelectablePointerEntered()
 		{
 			transform.DOScale(finalScale, tweenDelay).SetEase(Ease.Linear);
 		}
 
-		public void OnPointerExit()
+		public void OnSelectablePointerExit()
 		{
 			transform.DOScale(originalScale, tweenDelay).SetEase(Ease.Linear);
 		}
-
-		public void UpdateAmount(int value)
-        {
-			amount.text = value.ToString();
-        }
 	}
 }

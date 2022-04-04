@@ -10,12 +10,13 @@ namespace ClimateManagement
     {
         [SerializeField] private float maxTime = default;
         [SerializeField] private Image fillImage = default;
+        [SerializeField] CalendarController calendarController = default;
 
         private bool timerIsRunning = false;
 
         private float timerTime;
 
-        private void OnEnable()
+        private void Start()
         {
             StartCoolDownTimer();
         }
@@ -35,8 +36,11 @@ namespace ClimateManagement
                     Debug.Log("Time has run out!");
                     timerTime = 0;
                     timerIsRunning = false;
-                    GetComponentInParent<Button>().interactable = true;
-                    gameObject.SetActive(false);
+                    calendarController.ChangeMonth();
+                    //GetComponentInParent<Button>().interactable = true;
+                    //gameObject.SetActive(false);
+                    fillImage.fillAmount = 1;
+                    StartCoolDownTimer();
                 }
             }
         }
@@ -45,8 +49,8 @@ namespace ClimateManagement
         {
             timerTime = maxTime;
             timerIsRunning = true;
-            CursorManager.Instance.SetActiveCursorType(CursorType.CantSelect);
-            GetComponentInParent<Button>().interactable = false;
+            //CursorManager.Instance.SetActiveCursorType(CursorType.CantSelect);
+            //GetComponentInParent<Button>().interactable = false;
         }
     }
 }
