@@ -51,15 +51,6 @@ public class CameraController : MonoBehaviour
             newPos += transform.right * movementSpeed;
         }
 
-        //if (Input.GetKey(KeyCode.Q))
-        //{
-        //    newRot *= Quaternion.Euler(Vector3.up * rotAmount);
-        //}
-        //if (Input.GetKey(KeyCode.E))
-        //{
-        //    newRot *= Quaternion.Euler(Vector3.up * -rotAmount);
-        //}
-
         if (Input.mouseScrollDelta.y != 0)
         {
             newZoom += Input.mouseScrollDelta.y * zoomAmount;

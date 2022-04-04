@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -292,6 +292,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileDatabase: {fileID: 11400000, guid: 4d8b612b41ebe8849916e44305be3c33, type: 2}
   tileGenerator: {fileID: 1102518631}
+  popupTime: 3
+  mapTime: 30
 --- !u!114 &1102518630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,9 +318,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a19c5b3fdf2f384d8199e9214f7b76f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: ringTiles
+      Entry: 7
+      Data: 0|UnityEngine.Rendering.SerializedDictionary`2[[System.Int32, mscorlib],[System.Collections.Generic.List`1[[ClimateManagement.Tile,
+        Assembly-CSharp]], mscorlib]], Unity.RenderPipelines.Core.Runtime
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   tileDatabase: {fileID: 11400000, guid: 4d8b612b41ebe8849916e44305be3c33, type: 2}
   tileWidth: 1.73
-  initialRingCount: 0
+  initialRingCount: 1
   ringCount: 2
   maxStages: 5
 --- !u!4 &1102518633
@@ -385,7 +416,6 @@ MonoBehaviour:
   movementTime: 5
   camTransform: {fileID: 1411165125}
   zoomAmount: {x: 0, y: -6, z: 10}
-  boxCollider: {fileID: 0}
 --- !u!1 &1411165122
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,13 +493,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411165122}
-  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: 0, y: 60, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1246597982}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!114 &1411165126
 MonoBehaviour:
   m_ObjectHideFlags: 0

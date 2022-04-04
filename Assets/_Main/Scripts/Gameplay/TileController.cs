@@ -13,17 +13,19 @@ namespace ClimateManagement
 
         [SerializeField] private TileDatabase tileDatabase = default;
         [SerializeField] private TileGenerator tileGenerator = default;
-        [SerializeField] private float popupTimer = default;
+        [SerializeField] private float popupTime = default;
+        [SerializeField] private float mapTime = default;
 
         private bool hasStarted;
-        private float timer;
+        private float popupTimer;
+        private float maptimer;
 
         private void Awake()
         {
             GameManager.OnGameStart += OnGameStart;
             TileInput.OnTileHover += OnTileHover;
             TileInput.OnTileSelected += OnTileSelected;
-            timer = popupTimer;
+            popupTimer = popupTime;
         }
 
         private void OnDestroy()
@@ -38,11 +40,19 @@ namespace ClimateManagement
             if (!hasStarted)
                 return;
 
-            timer -= Time.deltaTime;
-            if (timer <= 0)
+            popupTimer -= Time.deltaTime;
+            if (popupTimer <= 0)
             {
-                timer = popupTimer;
+                popupTimer = popupTime;
+                int r = UnityEngine.Random.Range(0, 6);
                 SpawnPopup();
+            }
+
+            maptimer -= Time.deltaTime;
+            if (maptimer <= 0)
+            {
+                maptimer = mapTime;
+                OnStageUpdate?.Invoke();
             }
         }
 

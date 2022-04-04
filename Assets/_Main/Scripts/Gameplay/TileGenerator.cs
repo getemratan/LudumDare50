@@ -18,7 +18,6 @@ namespace ClimateManagement
         private List<Tile> tempTiles;
         private List<Tile> allTiles;
         public Dictionary<int, List<Tile>> ringTiles;
-        public Dictionary<int, List<Tile>> stageTiles;
 
         private int currRingIndex;
         private int currStage;
@@ -26,7 +25,6 @@ namespace ClimateManagement
         private void Awake()
         {
             ringTiles = new Dictionary<int, List<Tile>>();
-            stageTiles = new Dictionary<int, List<Tile>>();
             tempTiles = new List<Tile>();
             allTiles = new List<Tile>();
             TileController.OnStageUpdate += OnStageUpdate;
@@ -71,13 +69,12 @@ namespace ClimateManagement
             if (currStage < maxStages)
             {
                 currStage++;
-                CacheStage(currStage, CreateRings(ringCount));
+                CreateRings(ringCount);
             }
         }
 
-        private List<Tile> CreateRings(int ringCount)
+        private void CreateRings(int ringCount)
         {
-            List<Tile> tiles = new List<Tile>();
             for (int r = 0; r < ringCount; r++)
             {
                 ringTiles.TryGetValue(ringTiles.Count - 1, out List<Tile> prevTiles);
@@ -101,7 +98,6 @@ namespace ClimateManagement
                     if (Mathf.RoundToInt(angle1) % 60 == 0)
                     {
                         Tile cornerTile = CreateCornerTile(currRingIndex - 1, currTile.transform.position);
-                        tiles.Add(cornerTile);
                     }
 
                     pivotTile = allTiles[finalIndex];
@@ -109,7 +105,6 @@ namespace ClimateManagement
                     diff.x += diff.x - pivotTile.transform.position.x;
                     diff.z += diff.z - pivotTile.transform.position.z;
                     Tile tile = SpawnTile(diff);
-                    tiles.Add(tile);
 
                     if (Mathf.RoundToInt(angle2) % 60 != 0 && currRingIndex > 1)
                     {
@@ -122,7 +117,6 @@ namespace ClimateManagement
                 tempTiles.Clear();
                 currRingIndex++;
             }
-            return tiles;
         }
 
         private Tile CreateCornerTile(int ringIndex, Vector3 prevTilePos)
@@ -147,7 +141,6 @@ namespace ClimateManagement
                 angle += angleOffset;
             }
             CacheRing(1);
-            CacheStage(currStage, tempTiles);
             tempTiles.Clear();
         }
 
@@ -158,27 +151,12 @@ namespace ClimateManagement
 
             List<Tile> tiles = new List<Tile>();
             tiles.Add(initTile);
-            CacheStage(currStage, tiles);
             tempTiles.Clear();
         }
 
         private void CacheRing(int ringId)
         {
             ringTiles.Add(ringId, new List<Tile>(tempTiles));
-        }
-
-        private void CacheStage(int stageId, List<Tile> tiles)
-        {
-            if (!stageTiles.ContainsKey(stageId))
-            {
-                stageTiles.Add(stageId, new List<Tile>());
-            }
-
-            stageTiles.TryGetValue(stageId, out List<Tile> sTiles);
-            for (int i = 0; i < tiles.Count; i++)
-            {
-                sTiles.Add(tiles[i]);
-            }
         }
 
         private Tile SpawnTile(Vector3 tilePos)
