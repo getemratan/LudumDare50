@@ -63,10 +63,11 @@ public class CameraController : MonoBehaviour
         if (Input.mouseScrollDelta.y != 0)
         {
             newZoom += Input.mouseScrollDelta.y * zoomAmount;
+            newZoom = new Vector3(0, Mathf.Clamp(newZoom.y, 24, 60), Mathf.Clamp(newZoom.z, -100f, -40f));
         }
-
         transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime * movementTime);
         transform.rotation = Quaternion.Lerp(transform.rotation, newRot, Time.deltaTime * movementTime);
+        
         camTransform.localPosition = Vector3.Lerp(camTransform.localPosition, newZoom, Time.deltaTime * movementTime);
     }
 }
