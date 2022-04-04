@@ -11,18 +11,6 @@ namespace ClimateManagement
         private Tile prevTile;
         private Tile currTile;
 
-        private TileType currentTileType = TileType.None;
-
-        private void Awake()
-        {
-            PlaceableButton.OnTileTypeSelected += SetNewCurrentTileType;
-        }
-
-        private void OnDestroy()
-        {
-            PlaceableButton.OnTileTypeSelected -= SetNewCurrentTileType;
-        }
-
         private void Update()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -31,13 +19,12 @@ namespace ClimateManagement
                 Tile tile;
                 if (hit.transform.TryGetComponent(out tile) || hit.transform.TryGetComponentInParent(out tile))
                 {
-                    //HandleTileHover(tile);
+                    HandleTileHover(tile);
                     HandleTileSelection(tile);
                 }
             }
             else
             {
-                //CursorManager.Instance.SetActiveCursorType(CursorType.Arrow);
                 currTile = null;
                 prevTile = null;
             }
@@ -57,7 +44,6 @@ namespace ClimateManagement
             if (prevTile == null)
             {
                 prevTile = currTile;
-                HandleCursorType(tile);
                 OnTileHover?.Invoke(tile);
             }
             else
@@ -65,29 +51,8 @@ namespace ClimateManagement
                 if (currTile != prevTile)
                 {
                     prevTile = currTile;
-                    HandleCursorType(tile);
                     OnTileHover?.Invoke(tile);
                 }
-            }
-        }
-
-        private void HandleCursorType(Tile tile)
-        {
-            if (tile.ReplaceableTilesTypes.Count > 0 && tile.ReplaceableTilesTypes.Contains(currentTileType))
-            {
-                //CursorManager.Instance.SetActiveCursorType(CursorType.Replace);
-            }
-            else
-            {
-                //CursorManager.Instance.SetActiveCursorType(CursorType.CantSelect);
-            }
-        }
-
-        private void SetNewCurrentTileType(TileType newTileType)
-        {
-            if (currentTileType != newTileType)
-            {
-                currentTileType = newTileType;
             }
         }
     }

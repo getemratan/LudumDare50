@@ -23,7 +23,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7177963335809172716}
-  - component: {fileID: 3608108833063340284}
+  - component: {fileID: -6301985608182862865}
   m_Layer: 0
   m_Name: Tile_Hex_Grass 2
   m_TagString: Untagged
@@ -46,7 +46,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3608108833063340284
+--- !u!114 &-6301985608182862865
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,15 +55,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7554488427335343702}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d549f53e8d2d2b42ac72a749902d724, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a8f1e3159e941f4a8bb059bca741ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileId: 0
-  grassRenderer: {fileID: 3752353292456887021}
-  grassMatIndex: 1
-  animateTime: 0.5
-  grassColors: {fileID: 11400000, guid: cd337987c2ba54a4bb6ba1cfa91e77a2, type: 2}
-  repleaceableTileTypes: 0000000003000000
+  animateTime: 0
 --- !u!1001 &2581297960550375017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,10 +128,5 @@ GameObject:
 --- !u!4 &2618884607750633858 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: beadb0f641ce72a4db2d0b48ba10fdd1, type: 3}
-  m_PrefabInstance: {fileID: 2581297960550375017}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &3752353292456887021 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: beadb0f641ce72a4db2d0b48ba10fdd1, type: 3}
   m_PrefabInstance: {fileID: 2581297960550375017}
   m_PrefabAsset: {fileID: 0}

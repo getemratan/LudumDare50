@@ -6,36 +6,59 @@ using Sirenix.OdinInspector;
 
 namespace ClimateManagement
 {
-    public class TileGeneratorV2 : MonoBehaviour
+    public class TileGenerator : MonoBehaviour
     {
-        public List<Tile> tilePrefabs = default;
-        public int initialRingCount = default;
-        public float tileWidth = default;
+        [SerializeField] private TileDatabase tileDatabase = default;
+        [SerializeField] private float tileWidth = default;
+        [SerializeField] private int initialRingCount = default;
+        [SerializeField] private int ringCount = default;
+        [SerializeField] private int maxStages = default;
 
+        private List<Tile> tempTiles;
         private List<Tile> allTiles;
-        private List<Tile> tiles;
-        private Dictionary<int, List<Tile>> tileDictionary;
+        public Dictionary<int, List<Tile>> tileDictionary;
 
         private int currRingIndex;
+        private int currStage;
 
         private void Awake()
         {
             tileDictionary = new Dictionary<int, List<Tile>>();
-            tiles = new List<Tile>();
+            tempTiles = new List<Tile>();
             allTiles = new List<Tile>();
+            TileController.OnStageUpdate += OnStageUpdate;
+        }
+
+        private void OnDestroy()
+        {
+            TileController.OnStageUpdate -= OnStageUpdate;
         }
 
         void Start()
         {
             CreateFirstTile();
             CreateFirstRing();
-            currRingIndex = 2;
-            CreateRings(initialRingCount);
 
-            CreateRings(10);
+            currRingIndex = 2;
+            currStage = 1;
+
+            CreateRings(initialRingCount);
         }
 
-        [Button("Create Rings", Style = ButtonStyle.Box)]
+        private void OnStageUpdate()
+        {
+            CreateNextStage();
+        }
+
+        public void CreateNextStage()
+        {
+            if (currStage < maxStages)
+            {
+                currStage++;
+                CreateRings(ringCount);
+            }
+        }
+
         private void CreateRings(int ringCount)
         {
             for (int r = 0; r < ringCount; r++)
@@ -77,7 +100,7 @@ namespace ClimateManagement
                 }
 
                 CacheRing(currRingIndex);
-                tiles.Clear();
+                tempTiles.Clear();
                 currRingIndex++;
             }
         }
@@ -104,27 +127,27 @@ namespace ClimateManagement
                 angle += angleOffset;
             }
             CacheRing(1);
-            tiles.Clear();
+            tempTiles.Clear();
         }
 
         private void CreateFirstTile()
         {
             SpawnTile(transform.position);
             CacheRing(0);
-            tiles.Clear();
+            tempTiles.Clear();
         }
 
         private void CacheRing(int ringId)
         {
-            tileDictionary.Add(ringId, new List<Tile>(tiles));
+            tileDictionary.Add(ringId, new List<Tile>(tempTiles));
         }
 
         private void SpawnTile(Vector3 tilePos)
         {
-            int rTile = UnityEngine.Random.Range(0, tilePrefabs.Count);
-            Tile tile = Instantiate(tilePrefabs[rTile], transform);
+            int rTile = UnityEngine.Random.Range(0, tileDatabase.baseTilePrefabs.Count);
+            Tile tile = Instantiate(tileDatabase.baseTilePrefabs[rTile], transform);
             tile.transform.position = tilePos;
-            tiles.Add(tile);
+            tempTiles.Add(tile);
             allTiles.Add(tile);
         }
     }
