@@ -9,6 +9,7 @@ namespace ClimateManagement
 	{
 		[SerializeField] private SelectionScreenManager selectionScreen = default;
         [SerializeField] private PlaceableButton[] placeableButtons = default;
+        [SerializeField] private CooldownTimer cooldownTimer = default;
 
         private void OnEnable()
         {
@@ -31,7 +32,7 @@ namespace ClimateManagement
         private void UpdateTileCount(int amount, TileType tileType)
         {
             selectionScreen.gameObject.SetActive(false);
-
+            cooldownTimer.SetYearCompleteBool(false);
             foreach (var button in placeableButtons)
             {
                 if (button.TileType == tileType)

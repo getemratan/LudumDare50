@@ -15,6 +15,7 @@ namespace ClimateManagement
 		[SerializeField] private GameObject calendarFrame = default;
 		[SerializeField] private string[] monthArray = default;
 		[SerializeField] private float tweenDelay = default;
+		[SerializeField] private CooldownTimer cooldownTimer = default;
 
 		private int currMonthCounter = 0;
 
@@ -24,6 +25,7 @@ namespace ClimateManagement
 		{
 			if (currMonthCounter == 11)
             {
+				cooldownTimer.SetYearCompleteBool(true);
 				currYear++;
 				OnYearComplete?.Invoke(currYear);
 				currMonthCounter = 0;

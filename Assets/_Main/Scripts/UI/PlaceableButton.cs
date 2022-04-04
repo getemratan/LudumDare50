@@ -21,13 +21,35 @@ namespace ClimateManagement
 
 		public TileType TileType { get => tileType; }
 
+		private int currAmount;
+
 		private void Start()
 		{
+			currAmount = defaultAmount;
 			originalScale = transform.localScale;
-			amount.text = defaultAmount.ToString();
+			amount.text = currAmount.ToString();
 		}
 
-		public void OnPlaceableButtonClicked()
+        private void OnEnable()
+        {
+			TileController.OnTilePlaced += DeductAmount;
+        }
+
+        private void OnDisable()
+        {
+			TileController.OnTilePlaced -= DeductAmount;
+		}
+
+		private void DeductAmount(TileType currTileType)
+        {
+			if (currTileType == tileType)
+            {
+				currAmount--;
+				amount.text = currAmount.ToString();
+			}
+        }
+
+        public void OnPlaceableButtonClicked()
 		{
 			transform.DOScale(originalScale, tweenDelay).SetEase(Ease.Linear);
 			OnTileTypeSelected?.Invoke(tileType);
@@ -45,7 +67,8 @@ namespace ClimateManagement
 
 		public void UpdateAmount(int value)
         {
-			amount.text = value.ToString();
+			currAmount += value;
+			amount.text = currAmount.ToString();
         }
 	}
 }

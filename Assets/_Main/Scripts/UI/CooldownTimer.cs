@@ -16,9 +16,31 @@ namespace ClimateManagement
 
         private float timerTime;
 
+        private bool yearComplete = false;
+
         private void Start()
         {
             StartCoolDownTimer();
+        }
+
+        private void OnEnable()
+        {
+
+        }
+
+        private void OnDisable()
+        {
+
+        }
+
+        public void SetYearCompleteBool(bool value)
+        {
+            if (!value)
+            {
+                StartCoolDownTimer();
+            }
+
+            yearComplete = value;
         }
 
         // Update is called once per frame
@@ -40,7 +62,10 @@ namespace ClimateManagement
                     //GetComponentInParent<Button>().interactable = true;
                     //gameObject.SetActive(false);
                     fillImage.fillAmount = 1;
-                    StartCoolDownTimer();
+                    if (!yearComplete)
+                    {
+                        StartCoolDownTimer();
+                    }
                 }
             }
         }

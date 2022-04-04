@@ -10,6 +10,7 @@ namespace ClimateManagement
     public class TileController : MonoBehaviour
     {
         public static event System.Action OnStageUpdate;
+        public static event Action<TileType> OnTilePlaced;
 
         [SerializeField] private TileDatabase tileDatabase = default;
         [SerializeField] private TileGenerator tileGenerator = default;
@@ -93,6 +94,7 @@ namespace ClimateManagement
             {
                 int r = Utils.GetRandomValue(0, tileListSO.TileTypeLists[currentTileType].Count);
                 tileGenerator.ReplaceTile(tile, tileListSO.TileTypeLists[currentTileType][r]);
+                OnTilePlaced?.Invoke(currentTileType);
             }
         }
 

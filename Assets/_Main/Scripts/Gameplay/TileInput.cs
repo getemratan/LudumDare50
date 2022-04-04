@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 namespace ClimateManagement
 {
@@ -13,13 +15,22 @@ namespace ClimateManagement
         private Tile prevTile;
         private Tile currTile;
 
+        public static bool IsPointerOverUIObject()
+        {
+            PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+            eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+            return results.Count > 0;
+        }
+
         private void Update()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
             {
                 Tile tile;
-                if (hit.transform.TryGetComponent(out tile) || hit.transform.TryGetComponentInParent(out tile))
+                if (hit.transform.TryGetComponent(out tile) || hit.transform.TryGetComponentInParent(out tile) || !IsPointerOverUIObject())
                 {
                     HandleTileHover(tile);
                     HandleTileSelection(tile);
