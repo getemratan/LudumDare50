@@ -31,15 +31,18 @@ namespace ClimateManagement
         private int houseCounter = 0;
 
         private int currentTemperature = 0;
+        private float tempPerc;
 
         private void Awake()
         {
-            TileController.OnHousePopUp += OnHouseCounterIncreased;
+            //TileController.OnHousePopUp += OnHouseCounterIncreased;
+            TileController.OnTilePlaced += OnTilePlaced;
         }
 
         private void OnDestroy()
         {
-            TileController.OnHousePopUp -= OnHouseCounterIncreased;
+            //TileController.OnHousePopUp -= OnHouseCounterIncreased;
+            TileController.OnTilePlaced -= OnTilePlaced;
         }
 
         private void Start()
@@ -48,6 +51,37 @@ namespace ClimateManagement
             temperatureDisplay.text = $"{defaultTemperature}°C";
             currentTemperatureUnit = TemperatureUnit.Celcius;
             temperatureButton.onClick.AddListener(() => OnTemperatureButtonClicked());
+            OnTilePlaced(TileType.None);
+        }
+
+        private void OnTilePlaced(TileType tileType)
+        {
+            int totalCount = tileGenerator.GetAllTiles();
+            int goodCount = tileGenerator.GetAllGoodTiles();
+            int badCount = tileGenerator.GetAllBadTiles();
+
+            if (goodCount > badCount)
+            {
+                int diff = goodCount - badCount;
+                tempPerc = 1f - ((float)diff / (float)totalCount);
+            }
+            else if(goodCount < badCount)
+            {
+                int diff = badCount - goodCount;
+                tempPerc = ((float)diff / (float)totalCount);
+            }
+            else
+            {
+                tempPerc = 0.5f;
+            }
+
+            currentTemperature = Mathf.CeilToInt(Mathf.Lerp(defaultTemperature, thresholdTemperature, tempPerc));
+            temperatureDisplay.text = $"{currentTemperature}°C";
+
+            if (tempPerc >= 1f)
+            {
+                screensManager.GameOver();
+            }
         }
 
         private void OnHouseCounterIncreased()

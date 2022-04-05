@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ClimateManagement
 {
-    public class WindMill : Tile
+    public class WindMill : Tile, IGoodTile
     {
         [SerializeField] private Transform fanTransform = default;
         [SerializeField] private float fanSpeed = default;

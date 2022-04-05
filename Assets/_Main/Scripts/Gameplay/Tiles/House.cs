@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ClimateManagement
 {
-	public class House : Tile
+	public class House : Tile, IPopupable, IBadTile
 	{
 		
 	}

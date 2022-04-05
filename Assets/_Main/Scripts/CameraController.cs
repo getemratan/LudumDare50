@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
         if (Input.mouseScrollDelta.y != 0)
         {
             newZoom += Input.mouseScrollDelta.y * zoomAmount;
-            newZoom = new Vector3(0, Mathf.Clamp(newZoom.y, 24, 60), Mathf.Clamp(newZoom.z, -100f, -40f));
+            newZoom = new Vector3(0, Mathf.Clamp(newZoom.y, 10, 60), Mathf.Clamp(newZoom.z, -100f, -20));
         }
 
         newPos.x = Mathf.Clamp(newPos.x, -panLimit.x, panLimit.x);

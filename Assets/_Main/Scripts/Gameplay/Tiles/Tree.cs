@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ClimateManagement
 {
-	public class Tree : Tile
+	public class Tree : Tile, IGoodTile
 	{
 		
 	}

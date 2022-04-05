@@ -18,6 +18,7 @@ namespace ClimateManagement
         [SerializeField] private TileListSO tileListSO = default;
         [SerializeField] private float popupTime = default;
         [SerializeField] private float mapTime = default;
+        [SerializeField] private List<PlaceableButton> placeableButtons = default;
 
         private TileType currentTileType = TileType.Tree;
 
@@ -29,7 +30,7 @@ namespace ClimateManagement
 
         private void Awake()
         {
-            GameManager.OnGameStart += OnGameStart;
+            ScreensManager.OnGameStart += OnGameStart;
             TileInput.OnTileHover += OnTileHover;
             TileInput.OnTileSelected += OnTileSelected;
             PlaceableButton.OnTileTypeSelected += SetNewCurrentTileType;
@@ -38,7 +39,7 @@ namespace ClimateManagement
 
         private void OnDestroy()
         {
-            GameManager.OnGameStart -= OnGameStart;
+            ScreensManager.OnGameStart -= OnGameStart;
             TileInput.OnTileHover -= OnTileHover;
             TileInput.OnTileSelected -= OnTileSelected;
             PlaceableButton.OnTileTypeSelected -= SetNewCurrentTileType;
@@ -57,28 +58,65 @@ namespace ClimateManagement
                 SpawnPopup();
             }
 
-            maptimer -= Time.deltaTime;
-            if (maptimer <= 0)
-            {
-                maptimer = mapTime;
-                OnStageUpdate?.Invoke();
-            }
+            //maptimer -= Time.deltaTime;
+            //if (maptimer <= 0)
+            //{
+            //    maptimer = mapTime;
+            //    OnStageUpdate?.Invoke();
+            //}
         }
 
         private void SpawnPopup()
         {
+            PlaceableButton placeableButton = placeableButtons.Find(x => x.TileType == currentTileType);
+            if (placeableButton.currAmount <= 0)
+                return;
+
             Tile tree = tileGenerator.GetRandomTree();
             if (tree == null)
                 return;
 
-            List<Tile> houses = tileDatabase.popupTiles.FindAll(x => x is House);
+            List<Tile> houses = tileDatabase.popupTiles.FindAll(x => x is IPopupable);
             int r = Utils.GetRandomValue(0, houses.Count);
             tileGenerator.ReplaceTile(tree, houses[r]);
-            OnHousePopUp?.Invoke();
+
+            List<Tile> adjTrees = tileGenerator.GetAdjacentTrees(tree);
+            for (int i = 0; i < adjTrees.Count; i++)
+            {
+                int n = Utils.GetRandomValue(0, houses.Count);
+                tileGenerator.ReplaceTile(adjTrees[i], houses[n]);
+            }
+        }
+
+        private bool IsReplaceValid(Tile tile, Tile replaceTilePrefab)
+        {
+            bool isValid = false;
+            if (tile is Default && replaceTilePrefab is Tree)
+            {
+                isValid = true;
+            }
+            else if (tile is Waste && replaceTilePrefab is WasteCollection)
+            {
+                isValid = true;
+            }
+            else if (tile is Mine && replaceTilePrefab is WindMill)
+            {
+                isValid = true;
+            }
+            return isValid;
         }
 
         private void OnGameStart()
         {
+            StartCoroutine(Generate());
+        }
+
+        private IEnumerator Generate()
+        {
+            tileGenerator.CreateMap();
+
+            yield return new WaitForSeconds(1f);
+
             List<Tile> houses = tileDatabase.popupTiles.FindAll(x => x is House);
             int r = Utils.GetRandomValue(0, houses.Count);
             Tile popupTile = houses[r];
@@ -95,9 +133,12 @@ namespace ClimateManagement
             if (tile is IReplaceableTile)
             {
                 int r = Utils.GetRandomValue(0, tileListSO.TileTypeLists[currentTileType].Count);
-                tileGenerator.ReplaceTile(tile, tileListSO.TileTypeLists[currentTileType][r]);
-                OnTilePlaced?.Invoke(currentTileType);
-                tileGenerator.GetAdjacentTiles(tile);
+
+                if (IsReplaceValid(tile, tileListSO.TileTypeLists[currentTileType][r]))
+                {
+                    tileGenerator.ReplaceTile(tile, tileListSO.TileTypeLists[currentTileType][r]);
+                    OnTilePlaced?.Invoke(currentTileType);
+                }
             }
         }
 

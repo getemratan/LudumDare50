@@ -22,7 +22,7 @@ namespace ClimateManagement
 
 		public TileType TileType { get => tileType; }
 
-		private int currAmount;
+		public int currAmount;
 
 
 		private void Start()
@@ -47,6 +47,7 @@ namespace ClimateManagement
 			if (currTileType == tileType)
             {
 				currAmount--;
+				currAmount = Mathf.Clamp(currAmount, 0, 100);
 				amount.text = currAmount.ToString();
 			}
         }

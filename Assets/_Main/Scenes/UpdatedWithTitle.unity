@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 143.82684, y: -50}
+  m_AnchoredPosition: {x: 143.82678, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &12008486
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_fontSize: 80
   m_fontSizeBase: 80
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -944,7 +944,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 143.82684, y: -180}
+  m_AnchoredPosition: {x: 143.82678, y: -180}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &546377759
@@ -1629,15 +1629,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294c9860bdd0c3d4696e4882d2456dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultTemperature: 10
-  thresholdTemperature: 12
-  requiredCountOfHouses: 1
+  defaultTemperature: 25
+  thresholdTemperature: 50
+  requiredCountOfHouses: 10
   temperatureDisplay: {fileID: 176062478}
   temperatureButton: {fileID: 176062480}
   buttonShrinkScale: {x: 0.8, y: 0.8, z: 0.8}
   tweenDelay: 0.2
   screensManager: {fileID: 578311125}
-  tileGenerator: {fileID: 0}
+  tileGenerator: {fileID: 1102518631}
 --- !u!4 &858979484
 Transform:
   m_ObjectHideFlags: 0
@@ -1773,7 +1773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b33c2b930b062245be0f067b7f36d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTime: 2
+  maxTime: 5
   fillImage: {fileID: 972064166}
   calendarController: {fileID: 708143324}
 --- !u!114 &972064166
@@ -1973,7 +1973,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1102518629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1990,7 +1990,11 @@ MonoBehaviour:
   tileGenerator: {fileID: 1102518631}
   tileListSO: {fileID: 11400000, guid: 0513f3185b0e85e4299a6a812fe11e8f, type: 2}
   popupTime: 3
-  mapTime: 30
+  mapTime: 60
+  placeableButtons:
+  - {fileID: 1761404506}
+  - {fileID: 121427731}
+  - {fileID: 2073960739}
 --- !u!114 &1102518630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2026,13 +2030,30 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes:
     - Name: ringTiles
-      Entry: 6
+      Entry: 7
+      Data: 0|SerializableDictionary`2[[System.Int32, mscorlib],[System.Collections.Generic.List`1[[ClimateManagement.Tile,
+        Assembly-CSharp]], mscorlib]], Assembly-CSharp
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
   tileDatabase: {fileID: 11400000, guid: 4d8b612b41ebe8849916e44305be3c33, type: 2}
   tileWidth: 1.73
-  initialRingCount: 1
+  initialRingCount: 10
   ringCount: 2
-  maxStages: 5
+  maxStages: 0
   allTiles: []
 --- !u!4 &1102518633
 Transform:
@@ -2278,7 +2299,7 @@ MonoBehaviour:
   movementTime: 5
   camTransform: {fileID: 1411165125}
   zoomAmount: {x: 0, y: -6, z: 10}
-  panLimit: {x: 0, y: 0}
+  panLimit: {x: 20, y: 20}
 --- !u!1 &1411165122
 GameObject:
   m_ObjectHideFlags: 0
@@ -2357,7 +2378,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411165122}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: -0, y: 100, z: -173}
+  m_LocalPosition: {x: 0, y: 60.25, z: -104.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1246597982}
@@ -2719,49 +2740,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548589808}
   m_CullTransparentMesh: 1
---- !u!1 &1607360701
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1607360703}
-  - component: {fileID: 1607360702}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1607360702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607360701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70bdccf1c422ae14abb19f15a24b4b40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1607360703
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607360701}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1663028892
 GameObject:
   m_ObjectHideFlags: 0
@@ -3197,6 +3175,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973170477}
   m_CullTransparentMesh: 1
+--- !u!114 &2073960739 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3236563819204236540, guid: 84cdb174476bab1419ca70a08713065e, type: 3}
+  m_PrefabInstance: {fileID: 176500194}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a31542a9e08b5438a38cc73eed9f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2076905930
 GameObject:
   m_ObjectHideFlags: 0
@@ -3438,7 +3427,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1718435485421201579, guid: abdcd6acbb3dd2a4aa2bf2e78c0f0d2c, type: 3}
+  m_Sprite: {fileID: 2327733926060160505, guid: c5a091d4711965a47ac1acec146c5e1d, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

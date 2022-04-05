@@ -35,7 +35,7 @@ namespace ClimateManagement
             TileController.OnStageUpdate -= OnStageUpdate;
         }
 
-        private void Start()
+        public void CreateMap()
         {
             CreateFirstTile();
             CreateFirstRing();
@@ -51,7 +51,7 @@ namespace ClimateManagement
             List<Tile> trees = new List<Tile>();
             trees = allTiles.FindAll(x => x is Tree);
 
-            if(trees != null && trees.Count > 0)
+            if (trees != null && trees.Count > 0)
             {
                 int r = Utils.GetRandomValue(0, trees.Count);
                 return trees[r];
@@ -71,6 +71,41 @@ namespace ClimateManagement
                 currStage++;
                 CreateRings(ringCount);
             }
+        }
+
+        public int GetAllTiles()
+        {
+            int count = 0;
+            for (int i = 0; i < allTiles.Count; i++)
+            {
+                if (allTiles[i] is Default || allTiles[i] is Water)
+                    continue;
+
+                count++;
+            }
+            return count;
+        }
+
+        public int GetAllGoodTiles()
+        {
+            int count = 0;
+            for (int i = 0; i < allTiles.Count; i++)
+            {
+                if (allTiles[i] is IGoodTile)
+                    count++;
+            }
+            return count;
+        }
+
+        public int GetAllBadTiles()
+        {
+            int count = 0;
+            for (int i = 0; i < allTiles.Count; i++)
+            {
+                if (allTiles[i] is IBadTile)
+                    count++;
+            }
+            return count;
         }
 
         private void CreateRings(int ringCount)
@@ -126,7 +161,7 @@ namespace ClimateManagement
 
             prevTilePos.x += d * Mathf.Cos(prevTileAngle);
             prevTilePos.z += d * Mathf.Sin(prevTileAngle);
-           return SpawnTile(prevTilePos);
+            return SpawnTile(prevTilePos);
         }
 
         private void CreateFirstRing()
@@ -195,7 +230,7 @@ namespace ClimateManagement
                 Ray ray = new Ray(pos, tilePos);
                 if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
                 {
-                    if(hit.transform.TryGetComponentInParent(out Tile hitTile))
+                    if (hit.transform.TryGetComponentInParent(out Tile hitTile))
                     {
                         adjTiles.Add(hitTile);
                     }
@@ -203,6 +238,36 @@ namespace ClimateManagement
                 angle += offset;
             }
             return adjTiles;
+        }
+
+        public List<Tile> GetAdjacentTrees(Tile tile)
+        {
+            List<Tile> adjTiles = GetAdjacentTiles(tile);
+
+            List<Tile> trees = new List<Tile>();
+            for (int i = 0; i < adjTiles.Count; i++)
+            {
+                if (adjTiles[i] is Tree)
+                {
+                    trees.Add(adjTiles[i]);
+                }
+            }
+            return trees;
+        }
+
+        public List<Tile> GetAdjacentHouses(Tile tile)
+        {
+            List<Tile> adjTiles = GetAdjacentTiles(tile);
+
+            List<Tile> houses = new List<Tile>();
+            for (int i = 0; i < adjTiles.Count; i++)
+            {
+                if (adjTiles[i] is House)
+                {
+                    houses.Add(adjTiles[i]);
+                }
+            }
+            return houses;
         }
     }
 }

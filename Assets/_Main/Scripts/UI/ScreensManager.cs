@@ -7,7 +7,9 @@ namespace ClimateManagement
 {
 	public class ScreensManager : MonoBehaviour
 	{
-		[SerializeField] private SelectionScreenManager selectionScreen = default;
+        public static event System.Action OnGameStart;
+
+        [SerializeField] private SelectionScreenManager selectionScreen = default;
         [SerializeField] private PlaceableButton[] placeableButtons = default;
         [SerializeField] private CooldownTimer cooldownTimer = default;
         [SerializeField] private GameObject titleScreen = default;
@@ -41,6 +43,9 @@ namespace ClimateManagement
             cooldownTimer.SetYearCompleteBool(false);
             foreach (var button in placeableButtons)
             {
+                Debug.Log(button.TileType);
+                Debug.Log(tileType);
+
                 if (button.TileType == tileType)
                 {
                     button.UpdateAmount(amount);
@@ -48,6 +53,7 @@ namespace ClimateManagement
                 }
             }
         }
+
 
         private void Update()
         {
@@ -58,7 +64,8 @@ namespace ClimateManagement
                 {
                     item.gameObject.SetActive(true);
                 }
-                tileGenerator.gameObject.SetActive(true);
+                //tileGenerator.gameObject.SetActive(true);
+                OnGameStart?.Invoke();
             }
         }
 

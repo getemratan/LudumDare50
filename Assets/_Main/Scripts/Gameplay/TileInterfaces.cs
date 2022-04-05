@@ -6,3 +6,18 @@ using UnityEngine;
 public interface IReplaceableTile
 {
 }
+
+public interface IPopupable
+{
+
+}
+
+public interface IGoodTile
+{
+
+}
+
+public interface IBadTile
+{
+
+}
