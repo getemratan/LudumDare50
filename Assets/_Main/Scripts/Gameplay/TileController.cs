@@ -18,7 +18,7 @@ namespace ClimateManagement
         [SerializeField] private float popupTime = default;
         [SerializeField] private float mapTime = default;
 
-        private TileType currentTileType = TileType.None;
+        private TileType currentTileType = TileType.Tree;
 
         public TileType CurrentTileType { get => currentTileType; }
 
