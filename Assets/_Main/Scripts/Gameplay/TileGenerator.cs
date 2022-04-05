@@ -179,5 +179,30 @@ namespace ClimateManagement
             allTiles.RemoveAt(index);
             allTiles.Insert(index, replaceTile);
         }
+
+        public List<Tile> GetAdjacentTiles(Tile tile)
+        {
+            List<Tile> adjTiles = new List<Tile>();
+
+            float angle = 0;
+            float offset = (Mathf.PI * 2f) / 6;
+            for (int i = 0; i < 6; i++)
+            {
+                Vector3 tilePos = new Vector3(Mathf.Cos(angle) * tileWidth, 0, Mathf.Sin(angle) * tileWidth);
+                Vector3 pos = tile.transform.position;
+                pos.y += 0.05f;
+
+                Ray ray = new Ray(pos, tilePos);
+                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+                {
+                    if(hit.transform.TryGetComponentInParent(out Tile hitTile))
+                    {
+                        adjTiles.Add(hitTile);
+                    }
+                }
+                angle += offset;
+            }
+            return adjTiles;
+        }
     }
 }

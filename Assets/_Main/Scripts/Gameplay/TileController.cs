@@ -95,6 +95,7 @@ namespace ClimateManagement
                 int r = Utils.GetRandomValue(0, tileListSO.TileTypeLists[currentTileType].Count);
                 tileGenerator.ReplaceTile(tile, tileListSO.TileTypeLists[currentTileType][r]);
                 OnTilePlaced?.Invoke(currentTileType);
+                tileGenerator.GetAdjacentTiles(tile);
             }
         }
 
