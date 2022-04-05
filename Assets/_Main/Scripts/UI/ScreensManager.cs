@@ -12,7 +12,8 @@ namespace ClimateManagement
         [SerializeField] private CooldownTimer cooldownTimer = default;
         [SerializeField] private GameObject titleScreen = default;
         [SerializeField] private TweenMove[] tweenMoves = default;
-        [SerializeField] private TileGenerator tileGenerator = default; 
+        [SerializeField] private TileGenerator tileGenerator = default;
+        [SerializeField] private GameObject gameOverScreen = default;
 
         private void OnEnable()
         {
