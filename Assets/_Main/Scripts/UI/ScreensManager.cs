@@ -10,6 +10,9 @@ namespace ClimateManagement
 		[SerializeField] private SelectionScreenManager selectionScreen = default;
         [SerializeField] private PlaceableButton[] placeableButtons = default;
         [SerializeField] private CooldownTimer cooldownTimer = default;
+        [SerializeField] private GameObject titleScreen = default;
+        [SerializeField] private TweenMove[] tweenMoves = default;
+        [SerializeField] private TileGenerator tileGenerator = default; 
 
         private void OnEnable()
         {
@@ -40,6 +43,19 @@ namespace ClimateManagement
                     button.UpdateAmount(amount);
                     break;
                 }
+            }
+        }
+
+        private void Update()
+        {
+            if (titleScreen.activeInHierarchy && Input.anyKeyDown)
+            {
+                titleScreen.SetActive(false);
+                foreach (var item in tweenMoves)
+                {
+                    item.gameObject.SetActive(true);
+                }
+                tileGenerator.gameObject.SetActive(true);
             }
         }
     }
