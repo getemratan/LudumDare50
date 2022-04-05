@@ -11,6 +11,7 @@ namespace ClimateManagement
     {
         public static event System.Action OnStageUpdate;
         public static event Action<TileType> OnTilePlaced;
+        public static event Action OnHousePopUp;
 
         [SerializeField] private TileDatabase tileDatabase = default;
         [SerializeField] private TileGenerator tileGenerator = default;
@@ -73,6 +74,7 @@ namespace ClimateManagement
             List<Tile> houses = tileDatabase.popupTiles.FindAll(x => x is House);
             int r = Utils.GetRandomValue(0, houses.Count);
             tileGenerator.ReplaceTile(tree, houses[r]);
+            OnHousePopUp?.Invoke();
         }
 
         private void OnGameStart()

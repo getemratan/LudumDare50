@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc345876cb0c9ff43b37546ccc070af2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  repleaceableTileTypes: 
+  repleaceableTileTypes: 03000000
 --- !u!1001 &681236011424439288
 PrefabInstance:
   m_ObjectHideFlags: 0

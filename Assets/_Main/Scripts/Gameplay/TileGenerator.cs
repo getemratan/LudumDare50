@@ -16,7 +16,7 @@ namespace ClimateManagement
         [SerializeField] private int maxStages = default;
 
         private List<Tile> tempTiles;
-        private List<Tile> allTiles;
+        public List<Tile> allTiles;
         public Dictionary<int, List<Tile>> ringTiles;
 
         private int currRingIndex;

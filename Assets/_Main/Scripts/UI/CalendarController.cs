@@ -21,6 +21,8 @@ namespace ClimateManagement
 
 		private int currYear = 0;
 
+		public int CurrentYear { get => currYear; }
+
 		public void ChangeMonth()
 		{
 			if (currMonthCounter == 11)

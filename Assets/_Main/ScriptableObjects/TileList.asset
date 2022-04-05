@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TileList
   m_EditorClassIdentifier: 
   TileTypeLists:
-    m_keys: 0100000004000000
+    m_keys: 01000000040000000500000003000000
     m_values:
     - data:
       - {fileID: -392666422316926165, guid: 5109ad1bdc23fad4b8e98735823389a6, type: 3}
@@ -22,3 +22,12 @@ MonoBehaviour:
       - {fileID: 8010598329557905240, guid: 3cfe086ea3daa5b4e9a914fb07f951e9, type: 3}
     - data:
       - {fileID: 6182180541396874085, guid: b2965ec9aba80ea49aadbce764b01ea4, type: 3}
+    - data:
+      - {fileID: 306857646084740905, guid: 63ee8188f5a8c6f458b01a3682917b31, type: 3}
+      - {fileID: -6301985608182862865, guid: a38a741d6d051984b9bdcd7a88063573, type: 3}
+      - {fileID: -8501932800099744081, guid: 3dd60975afe9a9d4f947a0dcd96018be, type: 3}
+      - {fileID: 669596249257112888, guid: 72eb21ed446e81742ba9f86a094b91ef, type: 3}
+      - {fileID: -4724703287563285390, guid: 669816c370b5a5e48b633a5692368023, type: 3}
+      - {fileID: -2063037025735027918, guid: 917f8914c804b6b43ad0d47399fee343, type: 3}
+    - data:
+      - {fileID: -2063037025735027918, guid: 2f121348378b2c94daff39979673755a, type: 3}

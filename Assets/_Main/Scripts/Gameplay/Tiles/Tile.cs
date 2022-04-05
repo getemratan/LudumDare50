@@ -36,6 +36,10 @@ namespace ClimateManagement
         Tree,
         House,
         WasteCollection,
-        Windmill
+        Windmill,
+        Grass,
+        Water,
+        Waste,
+        Factory
     }
 }

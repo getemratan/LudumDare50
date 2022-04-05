@@ -16,12 +16,14 @@ namespace ClimateManagement
 		[SerializeField] private TileType tileType = default;
 		[SerializeField] private TextMeshProUGUI amount = default;
 		[SerializeField] private int defaultAmount = default;
+		[SerializeField] private TileController tileController = default;
 
 		private Vector3 originalScale;
 
 		public TileType TileType { get => tileType; }
 
 		private int currAmount;
+
 
 		private void Start()
 		{

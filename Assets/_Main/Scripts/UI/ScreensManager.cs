@@ -14,6 +14,8 @@ namespace ClimateManagement
         [SerializeField] private TweenMove[] tweenMoves = default;
         [SerializeField] private TileGenerator tileGenerator = default;
         [SerializeField] private GameObject gameOverScreen = default;
+        [SerializeField] private GameOver gameOver = default;
+        [SerializeField] private CalendarController calendarController = default;
 
         private void OnEnable()
         {
@@ -58,6 +60,12 @@ namespace ClimateManagement
                 }
                 tileGenerator.gameObject.SetActive(true);
             }
+        }
+
+        public void GameOver()
+        {
+            gameOver.SetScore(calendarController.CurrentYear);
+            gameOverScreen.SetActive(true);
         }
     }
 }

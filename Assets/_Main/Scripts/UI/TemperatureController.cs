@@ -17,6 +17,8 @@ namespace ClimateManagement
         [SerializeField] private Button temperatureButton = default;
         [SerializeField] private Vector3 buttonShrinkScale = default;
         [SerializeField] private float tweenDelay = default;
+        [SerializeField] private ScreensManager screensManager = default;
+        [SerializeField] private TileGenerator tileGenerator = default;
 
         private enum TemperatureUnit
         {
@@ -32,12 +34,12 @@ namespace ClimateManagement
 
         private void Awake()
         {
-            
+            TileController.OnHousePopUp += OnHouseCounterIncreased;
         }
 
         private void OnDestroy()
         {
-            
+            TileController.OnHousePopUp -= OnHouseCounterIncreased;
         }
 
         private void Start()
@@ -48,14 +50,19 @@ namespace ClimateManagement
             temperatureButton.onClick.AddListener(() => OnTemperatureButtonClicked());
         }
 
-        private void OnHouseCounterIncreased(int value)
+        private void OnHouseCounterIncreased()
         {
-            houseCounter += value;
+            houseCounter++;
             if (houseCounter >= requiredCountOfHouses)
             {
                 currentTemperature++;
                 temperatureDisplay.text = $"{currentTemperature}°C" ;
                 houseCounter = 0;
+            }
+
+            if (currentTemperature >= thresholdTemperature)
+            {
+                screensManager.GameOver();
             }
         }
 
