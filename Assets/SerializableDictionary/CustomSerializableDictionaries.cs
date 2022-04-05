@@ -19,3 +19,6 @@ public class TileTypeTileListDictionary : SerializableDictionary<TileType, List<
 [Serializable]
 public class TileListStorage : SerializableDictionary.Storage<List<Tile>> { }
 
+[Serializable]
+public class TitlTypeSpriteDictionary : SerializableDictionary<TileType, Sprite> { }
+

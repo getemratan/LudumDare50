@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ClimateManagement
 {
@@ -18,23 +19,37 @@ namespace ClimateManagement
         [SerializeField] private GameObject gameOverScreen = default;
         [SerializeField] private GameOver gameOver = default;
         [SerializeField] private CalendarController calendarController = default;
+        [SerializeField] private Image currentTileIcon = default;
+        [SerializeField] private TitlTypeSpriteDictionary tileSprites = default;
+
+        private void Start()
+        {
+            //currentTileIcon
+        }
 
         private void OnEnable()
         {
             CalendarController.OnYearComplete += OpenSelectionScreen;
             SelectableButton.OnTileAmountUpdated += UpdateTileCount;
+            PlaceableButton.OnTileTypeSelected += UpdateTileIcon;
         }
 
         private void OnDisable()
         {
             CalendarController.OnYearComplete -= OpenSelectionScreen;
             SelectableButton.OnTileAmountUpdated -= UpdateTileCount;
+            PlaceableButton.OnTileTypeSelected -= UpdateTileIcon;
         }
 
         private void OpenSelectionScreen(int year)
         {
             selectionScreen.gameObject.SetActive(true);
             selectionScreen.SetYearText(year);
+        }
+
+        private void UpdateTileIcon(TileType newTileType)
+        {
+            currentTileIcon.sprite = tileSprites[newTileType];
         }
 
         private void UpdateTileCount(int amount, TileType tileType)
@@ -74,5 +89,12 @@ namespace ClimateManagement
             gameOver.SetScore(calendarController.CurrentYear);
             gameOverScreen.SetActive(true);
         }
+    }
+
+    [Serializable]
+    public class TileSprite
+    {
+        public TileType tile;
+        public Sprite tileSprite;
     }
 }
