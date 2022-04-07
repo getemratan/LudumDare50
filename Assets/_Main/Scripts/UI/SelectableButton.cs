@@ -14,7 +14,8 @@ namespace ClimateManagement
 		[SerializeField] private Vector3 finalScale = default;
 		[SerializeField] private float tweenDelay = default;
 		[SerializeField] private TileType tileType = default;
-		[SerializeField] private TextMeshProUGUI amount = default;
+		[SerializeField] private TextMeshProUGUI amountText = default;
+		[SerializeField] private TileCollectionAnimation tileCollectionAnimation = default;
 
 		private Vector3 originalScale;
 
@@ -22,7 +23,7 @@ namespace ClimateManagement
 
 		private void Start()
 		{
-			amount.text = $"+{Amount}";
+			amountText.text = $"+{Amount}";
 			originalScale = transform.localScale;
 		}
 
@@ -30,6 +31,7 @@ namespace ClimateManagement
 		{
 			transform.DOScale(originalScale, tweenDelay).SetEase(Ease.Linear);
 			OnTileAmountUpdated?.Invoke(Amount, tileType);
+			tileCollectionAnimation.Animate(Amount, tileType);
 		}
 
 		public void OnSelectablePointerEntered()

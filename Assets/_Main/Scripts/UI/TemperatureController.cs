@@ -51,7 +51,7 @@ namespace ClimateManagement
             temperatureDisplay.text = $"{defaultTemperature}°C";
             currentTemperatureUnit = TemperatureUnit.Celcius;
             temperatureButton.onClick.AddListener(() => OnTemperatureButtonClicked());
-            OnTilePlaced(TileType.None);
+            //OnTilePlaced(TileType.None);
         }
 
         private void OnTilePlaced(TileType tileType)
@@ -74,7 +74,7 @@ namespace ClimateManagement
             {
                 tempPerc = 0.5f;
             }
-
+            Debug.Log("Temp: " + tempPerc);
             currentTemperature = Mathf.CeilToInt(Mathf.Lerp(defaultTemperature, thresholdTemperature, tempPerc));
             temperatureDisplay.text = $"{currentTemperature}°C";
 
