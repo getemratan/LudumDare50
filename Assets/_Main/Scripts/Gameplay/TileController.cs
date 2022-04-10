@@ -19,6 +19,7 @@ namespace ClimateManagement
         [SerializeField] private float popupTime = default;
         [SerializeField] private float mapTime = default;
         [SerializeField] private List<PlaceableButton> placeableButtons = default;
+        [SerializeField] private ScreensManager screensManager = default;
 
         private TileType currentTileType = TileType.Tree;
 
@@ -68,13 +69,12 @@ namespace ClimateManagement
 
         private void SpawnPopup()
         {
-            PlaceableButton placeableButton = placeableButtons.Find(x => x.TileType == currentTileType);
-            if (placeableButton.currAmount <= 0)
-                return;
-
-            Tile tree = tileGenerator.GetRandomTree();
+            Tile tree = tileGenerator.GetRandomTreeOrEmpty();
             if (tree == null)
+            {
+                screensManager.GameOver();
                 return;
+            }
 
             List<Tile> houses = tileDatabase.popupTiles.FindAll(x => x is IPopupable);
             int r = Utils.GetRandomValue(0, houses.Count);
@@ -95,7 +95,7 @@ namespace ClimateManagement
             {
                 isValid = true;
             }
-            else if (tile is Waste && replaceTilePrefab is WasteCollection)
+            else if (tile is Waste && replaceTilePrefab is Default)
             {
                 isValid = true;
             }
@@ -103,6 +103,11 @@ namespace ClimateManagement
             {
                 isValid = true;
             }
+
+            PlaceableButton placeableButton = placeableButtons.Find(x => x.TileType == currentTileType);
+            if (placeableButton.currAmount <= 0)
+                isValid = false;
+
             return isValid;
         }
 
@@ -117,13 +122,13 @@ namespace ClimateManagement
 
             yield return new WaitForSeconds(1f);
 
-            List<Tile> houses = tileDatabase.popupTiles.FindAll(x => x is House);
-            int r = Utils.GetRandomValue(0, houses.Count);
-            Tile popupTile = houses[r];
+            //List<Tile> houses = tileDatabase.popupTiles.FindAll(x => x is House);
+            //int r = Utils.GetRandomValue(0, houses.Count);
+            //Tile popupTile = houses[r];
 
-            tileGenerator.ringTiles.TryGetValue(0, out List<Tile> tiles);
-            Tile initTile = tiles[0];
-            tileGenerator.ReplaceTile(initTile, popupTile);
+            //tileGenerator.ringTiles.TryGetValue(0, out List<Tile> tiles);
+            //Tile initTile = tiles[0];
+            //tileGenerator.ReplaceTile(initTile, popupTile);
 
             hasStarted = true;
         }

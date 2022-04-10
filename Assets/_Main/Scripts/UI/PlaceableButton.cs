@@ -70,7 +70,8 @@ namespace ClimateManagement
 
 		public void UpdateAmount(int value)
         {
-			currAmount = Mathf.CeilToInt(Mathf.Lerp(currAmount, currAmount + value, 4));
+			currAmount += value;
+			currAmount = Mathf.Clamp(currAmount, 0, 100);
 			amount.text = currAmount.ToString();
         }
 	}

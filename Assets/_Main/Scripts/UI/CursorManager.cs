@@ -43,7 +43,7 @@ namespace ClimateManagement
             {
                 frameTimer += cursorAnimation.frameRate;
                 currentFrame = (currentFrame + 1) % frameCount;
-                Cursor.SetCursor(cursorAnimation.textureArray[currentFrame], cursorAnimation.offset, CursorMode.Auto);
+                Cursor.SetCursor(cursorAnimation.textureArray[currentFrame], cursorAnimation.offset, CursorMode.ForceSoftware);
             }
         }
 

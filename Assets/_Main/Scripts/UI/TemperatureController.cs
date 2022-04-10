@@ -8,17 +8,22 @@ using DG.Tweening;
 
 namespace ClimateManagement
 {
-	public class TemperatureController : MonoBehaviour
-	{
+    public class TemperatureController : MonoBehaviour
+    {
         [SerializeField] private int defaultTemperature = default;
-		[SerializeField] private int thresholdTemperature = default;
-		[SerializeField] private int requiredCountOfHouses = default;
+        [SerializeField] private int thresholdTemperature = default;
+        [SerializeField] private int requiredCountOfHouses = default;
         [SerializeField] private TextMeshProUGUI temperatureDisplay = default;
         [SerializeField] private Button temperatureButton = default;
         [SerializeField] private Vector3 buttonShrinkScale = default;
         [SerializeField] private float tweenDelay = default;
         [SerializeField] private ScreensManager screensManager = default;
         [SerializeField] private TileGenerator tileGenerator = default;
+
+        public int totalCount;
+        public int goodCount;
+        public int badCount;
+        private bool hasStarted;
 
         private enum TemperatureUnit
         {
@@ -37,12 +42,19 @@ namespace ClimateManagement
         {
             //TileController.OnHousePopUp += OnHouseCounterIncreased;
             TileController.OnTilePlaced += OnTilePlaced;
+            ScreensManager.OnGameStart += OnGameStart;
         }
 
         private void OnDestroy()
         {
             //TileController.OnHousePopUp -= OnHouseCounterIncreased;
             TileController.OnTilePlaced -= OnTilePlaced;
+            ScreensManager.OnGameStart -= OnGameStart;
+        }
+
+        private void OnGameStart()
+        {
+            hasStarted = true;
         }
 
         private void Start()
@@ -54,31 +66,31 @@ namespace ClimateManagement
             //OnTilePlaced(TileType.None);
         }
 
+        private void Update()
+        {
+            if (!hasStarted)
+                return;
+
+            CalculateTemp();
+        }
+
         private void OnTilePlaced(TileType tileType)
         {
-            int totalCount = tileGenerator.GetAllTiles();
-            int goodCount = tileGenerator.GetAllGoodTiles();
-            int badCount = tileGenerator.GetAllBadTiles();
+            //CalculateTemp();
+        }
 
-            if (goodCount > badCount)
-            {
-                int diff = goodCount - badCount;
-                tempPerc = 1f - ((float)diff / (float)totalCount);
-            }
-            else if(goodCount < badCount)
-            {
-                int diff = badCount - goodCount;
-                tempPerc = ((float)diff / (float)totalCount);
-            }
-            else
-            {
-                tempPerc = 0.5f;
-            }
-            Debug.Log("Temp: " + tempPerc);
+        private void CalculateTemp()
+        {
+            totalCount = tileGenerator.allTiles.Count;
+            goodCount = tileGenerator.GetAllGoodTiles();
+            badCount = tileGenerator.GetAllBadTiles();
+
+            tempPerc = 1f - ((float)goodCount / (float)totalCount);
+
             currentTemperature = Mathf.CeilToInt(Mathf.Lerp(defaultTemperature, thresholdTemperature, tempPerc));
             temperatureDisplay.text = $"{currentTemperature}°C";
 
-            if (tempPerc >= 1f)
+            if (currentTemperature >= thresholdTemperature)
             {
                 screensManager.GameOver();
             }
@@ -90,7 +102,7 @@ namespace ClimateManagement
             if (houseCounter >= requiredCountOfHouses)
             {
                 currentTemperature++;
-                temperatureDisplay.text = $"{currentTemperature}°C" ;
+                temperatureDisplay.text = $"{currentTemperature}°C";
                 houseCounter = 0;
             }
 
@@ -104,7 +116,7 @@ namespace ClimateManagement
         {
             if (currentTemperatureUnit == TemperatureUnit.Celcius)
             {
-                int fahrenheit = (currentTemperature * 9 / 5) + 32;
+                int fahrenheit = ((int)currentTemperature * 9 / 5) + 32;
                 temperatureDisplay.text = $"{fahrenheit}°F";
                 currentTemperatureUnit = TemperatureUnit.Fahrenheit;
             }
@@ -123,5 +135,5 @@ namespace ClimateManagement
             mySequence.Append(temperatureButton.gameObject.transform
                 .DOScale(originalButtonScale, tweenDelay).SetEase(Ease.Linear));
         }
-	}
+    }
 }

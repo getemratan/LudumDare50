@@ -58,9 +58,6 @@ namespace ClimateManagement
             cooldownTimer.SetYearCompleteBool(false);
             foreach (var button in placeableButtons)
             {
-                Debug.Log(button.TileType);
-                Debug.Log(tileType);
-
                 if (button.TileType == tileType)
                 {
                     button.UpdateAmount(amount);

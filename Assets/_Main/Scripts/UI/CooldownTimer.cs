@@ -55,7 +55,7 @@ namespace ClimateManagement
                 }
                 else
                 {
-                    Debug.Log("Time has run out!");
+                    //Debug.Log("Time has run out!");
                     timerTime = 0;
                     timerIsRunning = false;
                     calendarController.ChangeMonth();

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -908,6 +908,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7769718620447821157, guid: f78d2ed1310a31d4eae98fc9e4c8ed26, type: 3}
+      propertyPath: m_Volume
+      value: 0.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f78d2ed1310a31d4eae98fc9e4c8ed26, type: 3}
 --- !u!1 &546377757
@@ -1065,7 +1069,7 @@ RectTransform:
   - {fileID: 838496675}
   - {fileID: 1406274680}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1088,6 +1092,7 @@ MonoBehaviour:
   placeableButtons:
   - {fileID: 1761404506}
   - {fileID: 121427731}
+  - {fileID: 2073960739}
   cooldownTimer: {fileID: 972064165}
   titleScreen: {fileID: 605572933}
   tweenMoves:
@@ -1427,7 +1432,7 @@ MonoBehaviour:
   - OCT
   - NOV
   - DEC
-  tweenDelay: 0.5
+  tweenDelay: 0
   cooldownTimer: {fileID: 972064165}
 --- !u!4 &708143325
 Transform:
@@ -1441,7 +1446,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &789760533
 GameObject:
@@ -1822,6 +1827,9 @@ MonoBehaviour:
   tweenDelay: 0.2
   screensManager: {fileID: 578311125}
   tileGenerator: {fileID: 1102518631}
+  totalCount: 0
+  goodCount: 0
+  badCount: 0
 --- !u!4 &858979484
 Transform:
   m_ObjectHideFlags: 0
@@ -1834,7 +1842,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &938672481
 GameObject:
@@ -1900,7 +1908,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &950761026 stripped
 RectTransform:
@@ -1957,7 +1965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b33c2b930b062245be0f067b7f36d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTime: 5
+  maxTime: 2
   fillImage: {fileID: 972064166}
   calendarController: {fileID: 708143324}
 --- !u!114 &972064166
@@ -2239,6 +2247,7 @@ MonoBehaviour:
   - {fileID: 1761404506}
   - {fileID: 121427731}
   - {fileID: 2073960739}
+  screensManager: {fileID: 578311125}
 --- !u!114 &1102518630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2295,9 +2304,10 @@ MonoBehaviour:
       Data: 
   tileDatabase: {fileID: 11400000, guid: 4d8b612b41ebe8849916e44305be3c33, type: 2}
   tileWidth: 1.73
-  initialRingCount: 10
+  initialRingCount: 5
   ringCount: 2
   maxStages: 0
+  treeClusters: 10
   allTiles: []
 --- !u!4 &1102518633
 Transform:
@@ -2311,7 +2321,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1106596967 stripped
 GameObject:
@@ -2491,7 +2501,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1246597981
 GameObject:
@@ -2945,7 +2955,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1480875353
 GameObject:
@@ -3719,18 +3729,18 @@ MonoBehaviour:
     textureArray:
     - {fileID: 2800000, guid: 4bdacc2e8964a96469b31a0b29e69b03, type: 3}
     frameRate: 0.1
-    offset: {x: 0, y: 0}
+    offset: {x: 0, y: 60}
   - cursorType: 1
     textureArray:
     - {fileID: 2800000, guid: 022bf1f7c92aabe45b4566197b35d9e6, type: 3}
     frameRate: 0.1
-    offset: {x: 0, y: 0}
+    offset: {x: 0, y: 60}
   - cursorType: 2
     textureArray:
     - {fileID: 2800000, guid: 22a63382fa6928f43bbb1300200bb90a, type: 3}
     - {fileID: 2800000, guid: 352c1d0cde7ce89459501d4d5e4cc8dc, type: 3}
     frameRate: 0.5
-    offset: {x: 0, y: 100}
+    offset: {x: 0, y: 60}
 --- !u!4 &2122265410
 Transform:
   m_ObjectHideFlags: 0
@@ -3743,7 +3753,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2140350108
 GameObject:
@@ -3773,7 +3783,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &451726290683508923
 GameObject:

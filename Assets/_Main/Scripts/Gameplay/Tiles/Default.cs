@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ClimateManagement
 {
-	public class Default : Tile, IReplaceableTile
+	public class Default : Tile, IReplaceableTile, IGoodTile
 	{
 		
 	}

@@ -14,6 +14,7 @@ namespace ClimateManagement
         [SerializeField] private int initialRingCount = default;
         [SerializeField] private int ringCount = default;
         [SerializeField] private int maxStages = default;
+        [SerializeField] private int treeClusters = default;
 
         private List<Tile> tempTiles;
         public List<Tile> allTiles;
@@ -44,6 +45,38 @@ namespace ClimateManagement
             currStage = 1;
 
             CreateRings(initialRingCount);
+
+            StartCoroutine(CreateTrees());
+        }
+
+        private IEnumerator CreateTrees()
+        {
+            yield return new WaitForSeconds(1f);
+            for (int i = 0; i < treeClusters; i++)
+            {
+                int r = Utils.GetRandomValue(0, allTiles.Count);
+                List<Tile> adjTiles = GetAdjacentTiles(allTiles[r]);
+                ReplaceTile(allTiles[r], GetRandomTreePrefab());
+
+                for (int j = 0; j < adjTiles.Count; j++)
+                {
+                    Tile tile = GetRandomTreePrefab();
+                    ReplaceTile(adjTiles[j], tile);
+                }
+            }
+        }
+
+        public Tile GetRandomTreePrefab()
+        {
+            List<Tile> trees = new List<Tile>();
+            trees = tileDatabase.baseTilePrefabs.FindAll(x => x is Tree);
+
+            if (trees.Count > 0)
+            {
+                int r = Utils.GetRandomValue(0, trees.Count);
+                return trees[r];
+            }
+            return null;
         }
 
         public Tile GetRandomTree()
@@ -51,7 +84,20 @@ namespace ClimateManagement
             List<Tile> trees = new List<Tile>();
             trees = allTiles.FindAll(x => x is Tree);
 
-            if (trees != null && trees.Count > 0)
+            if (trees.Count > 0)
+            {
+                int r = Utils.GetRandomValue(0, trees.Count);
+                return trees[r];
+            }
+            return null;
+        }
+
+        public Tile GetRandomTreeOrEmpty()
+        {
+            List<Tile> trees = new List<Tile>();
+            trees = allTiles.FindAll(x => x is Tree || x is Default);
+
+            if (trees.Count > 0)
             {
                 int r = Utils.GetRandomValue(0, trees.Count);
                 return trees[r];
@@ -84,6 +130,19 @@ namespace ClimateManagement
                 count++;
             }
             return count;
+        }
+
+        public List<Tile> GetEmptyTiles()
+        {
+            List<Tile> tiles = new List<Tile>();
+            for (int i = 0; i < allTiles.Count; i++)
+            {
+                if (allTiles[i] is Default)
+                {
+                    tiles.Add(allTiles[i]);
+                }
+            }
+            return tiles;
         }
 
         public int GetAllGoodTiles()
@@ -196,7 +255,7 @@ namespace ClimateManagement
 
         private Tile SpawnTile(Vector3 tilePos)
         {
-            int rTile = UnityEngine.Random.Range(0, tileDatabase.baseTilePrefabs.Count);
+            int rTile = UnityEngine.Random.Range(0, 6);
             Tile tile = Instantiate(tileDatabase.baseTilePrefabs[rTile], transform);
             tile.transform.position = tilePos;
             tempTiles.Add(tile);
@@ -247,7 +306,7 @@ namespace ClimateManagement
             List<Tile> trees = new List<Tile>();
             for (int i = 0; i < adjTiles.Count; i++)
             {
-                if (adjTiles[i] is Tree)
+                if (adjTiles[i] is Tree || adjTiles[i] is Default)
                 {
                     trees.Add(adjTiles[i]);
                 }
