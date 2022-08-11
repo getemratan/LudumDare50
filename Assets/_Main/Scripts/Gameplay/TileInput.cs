@@ -11,9 +11,24 @@ namespace ClimateManagement
 
         public static event Action<Tile> OnTileSelected;
         public static event Action<Tile> OnTileHover;
+        public static event Action OnTileExit;
 
         private Tile prevTile;
         private Tile currTile;
+
+        private bool isPaused;
+
+        public bool gameIsPaused { get => isPaused; }
+
+        private void OnEnable()
+        {
+            ScreensManager.IsPaused += (bool val) => isPaused = val;
+        }
+
+        private void OnDisable()
+        {
+            ScreensManager.IsPaused += (bool val) => isPaused = val;
+        }
 
         public static bool IsPointerOverUIObject()
         {
@@ -21,16 +36,19 @@ namespace ClimateManagement
             eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+            //Debug.Log("UI: " + results.Count);
             return results.Count > 0;
         }
 
         private void Update()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+            Vector3 dir = new Vector3(Input.mousePosition.x + 
+                Camera.main.transform.rotation.eulerAngles.x, Input.mousePosition.y + 45f, Input.mousePosition.z);
+            Ray ray = Camera.main.ScreenPointToRay(dir);
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity) && !isPaused && !IsPointerOverUIObject())
             {
                 Tile tile;
-                if (hit.transform.TryGetComponent(out tile) || hit.transform.TryGetComponentInParent(out tile) || !IsPointerOverUIObject())
+                if (hit.transform.TryGetComponent(out tile) || hit.transform.TryGetComponentInParent(out tile))
                 {
                     HandleTileHover(tile);
                     HandleTileSelection(tile);
@@ -41,6 +59,7 @@ namespace ClimateManagement
                 CursorManager.Instance.SetActiveCursorType(CursorType.Arrow);
                 currTile = null;
                 prevTile = null;
+                OnTileExit?.Invoke();
             }
         }
 
@@ -54,6 +73,7 @@ namespace ClimateManagement
 
         private void HandleTileHover(Tile tile)
         {
+            //Debug.Log("Hver");
             currTile = tile;
             if (prevTile == null)
             {
@@ -74,7 +94,8 @@ namespace ClimateManagement
 
         private void HandleCursorType(Tile tile)
         {
-            if (tile.ReplaceableTilesTypes.Count > 0 && tile.ReplaceableTilesTypes.Contains(tileController.CurrentTileType))
+            if (tile.ReplaceableTilesTypes.Count > 0 && tile.ReplaceableTilesTypes.Contains(tileController
+                .CurrentTileType) && tileController.CurrentTileCount() > 0)
             {
                 CursorManager.Instance.SetActiveCursorType(CursorType.Replace);
             }

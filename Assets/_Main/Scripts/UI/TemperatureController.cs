@@ -19,11 +19,14 @@ namespace ClimateManagement
         [SerializeField] private float tweenDelay = default;
         [SerializeField] private ScreensManager screensManager = default;
         [SerializeField] private TileGenerator tileGenerator = default;
+        [SerializeField] private Color[] temperatureColors = default;
 
-        public int totalCount;
-        public int goodCount;
-        public int badCount;
+        private int totalCount;
+        private int goodCount;
+        private int badCount;
         private bool hasStarted;
+
+        private int currHouseCount;
 
         private enum TemperatureUnit
         {
@@ -43,6 +46,8 @@ namespace ClimateManagement
             //TileController.OnHousePopUp += OnHouseCounterIncreased;
             TileController.OnTilePlaced += OnTilePlaced;
             ScreensManager.OnGameStart += OnGameStart;
+            TileController.OnTilePopUpComplete += TileController_OnTilePopUpComplete;
+            TileController.OnAdjacentHouseCalculated += TileController_OnAdjacentHouseCalculated;
         }
 
         private void OnDestroy()
@@ -50,6 +55,8 @@ namespace ClimateManagement
             //TileController.OnHousePopUp -= OnHouseCounterIncreased;
             TileController.OnTilePlaced -= OnTilePlaced;
             ScreensManager.OnGameStart -= OnGameStart;
+            TileController.OnTilePopUpComplete -= TileController_OnTilePopUpComplete;
+            TileController.OnAdjacentHouseCalculated -= TileController_OnAdjacentHouseCalculated;
         }
 
         private void OnGameStart()
@@ -66,11 +73,16 @@ namespace ClimateManagement
             //OnTilePlaced(TileType.None);
         }
 
-        private void Update()
-        {
-            if (!hasStarted)
-                return;
+        //private void Update()
+        //{
+        //    if (!hasStarted)
+        //        return;
 
+            
+        //}
+
+        private void TileController_OnTilePopUpComplete()
+        {
             CalculateTemp();
         }
 
@@ -79,15 +91,41 @@ namespace ClimateManagement
             //CalculateTemp();
         }
 
-        private void CalculateTemp()
+        private void TileController_OnAdjacentHouseCalculated(int val)
+        {
+            currHouseCount += val;
+
+            if (currHouseCount > 3)
+            {
+                CalculateTemp(true, 0.02f);
+            }
+            else if (currHouseCount > 0 && currHouseCount <= 3)
+            {
+                Debug.Log("yes");
+                CalculateTemp(true, 0.001f);
+            }
+        }
+
+        private void CalculateTemp(bool bonusVal = false, float val = 0)
         {
             totalCount = tileGenerator.allTiles.Count;
             goodCount = tileGenerator.GetAllGoodTiles();
             badCount = tileGenerator.GetAllBadTiles();
+            
+            if (bonusVal)
+            {
+                tempPerc = 1f - ((float)goodCount / totalCount) - val;
+            }
+            else
+            {
+                tempPerc = 1f - ((float)goodCount / totalCount);
+            }
 
-            tempPerc = 1f - ((float)goodCount / (float)totalCount);
-
+            //Debug.Log("perc: " + (tempPerc - 0.02f));
+            //Debug.Log(tempPerc);
             currentTemperature = Mathf.CeilToInt(Mathf.Lerp(defaultTemperature, thresholdTemperature, tempPerc));
+            temperatureDisplay.color = Color.Lerp(temperatureColors[0], temperatureColors[1], tempPerc);
+
             temperatureDisplay.text = $"{currentTemperature}°C";
 
             if (currentTemperature >= thresholdTemperature)

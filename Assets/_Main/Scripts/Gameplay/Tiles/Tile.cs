@@ -14,7 +14,7 @@ namespace ClimateManagement
 
         private void Awake()
         {
-            animateTime = 0.5f;
+            animateTime = 0.6f;
             AnimateChildren();
         }
 

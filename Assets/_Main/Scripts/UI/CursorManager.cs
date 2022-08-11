@@ -20,11 +20,9 @@ namespace ClimateManagement
         private int currentFrame;
         private float frameTimer;
         private int frameCount;
+        private CursorType currCursorType;
 
-        public override void Awake()
-        {
-            base.Awake();
-        }
+        public CursorType CurrCursorType { get => currCursorType; }
 
         private void OnDestroy()
         {
@@ -49,6 +47,7 @@ namespace ClimateManagement
 
         public void SetActiveCursorType(CursorType cursorType)
         {
+            currCursorType = cursorType;
             SetActiveCursorAnimation(GetCursorAnimation(cursorType));
             //OnCursorChanged?.Invoke(this, new OnCursorChangedEventArgs { cursorType = cursorType });
         }

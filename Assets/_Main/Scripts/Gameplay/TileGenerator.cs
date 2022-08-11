@@ -105,6 +105,19 @@ namespace ClimateManagement
             return null;
         }
 
+        public Tile GetRandomHouse()
+        {
+            List<Tile> houses = new List<Tile>();
+            houses = allTiles.FindAll(x => x is House);
+
+            if (houses.Count > 0)
+            {
+                int r = Utils.GetRandomValue(0, houses.Count);
+                return houses[r];
+            }
+            return null;
+        }
+
         private void OnStageUpdate()
         {
             CreateNextStage();
@@ -255,7 +268,7 @@ namespace ClimateManagement
 
         private Tile SpawnTile(Vector3 tilePos)
         {
-            int rTile = UnityEngine.Random.Range(0, 6);
+            int rTile = UnityEngine.Random.Range(0, 7);
             Tile tile = Instantiate(tileDatabase.baseTilePrefabs[rTile], transform);
             tile.transform.position = tilePos;
             tempTiles.Add(tile);

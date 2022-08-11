@@ -11,7 +11,12 @@ namespace ClimateManagement
     {
         public static event System.Action OnStageUpdate;
         public static event Action<TileType> OnTilePlaced;
-        public static event Action OnHousePopUp;
+        public static event Action OnTilePopUpComplete;
+        public static event Action<int> OnAdjacentHouseCalculated;
+        public static event Action<int> OnCurrentTileCountUpdated;
+
+        //public delegate void Placed(TileType tileType, int val = 0);
+        //public static event Placed OnTilePlaced;
 
         [SerializeField] private TileDatabase tileDatabase = default;
         [SerializeField] private TileGenerator tileGenerator = default;
@@ -20,6 +25,9 @@ namespace ClimateManagement
         [SerializeField] private float mapTime = default;
         [SerializeField] private List<PlaceableButton> placeableButtons = default;
         [SerializeField] private ScreensManager screensManager = default;
+        [SerializeField] private TileInput tileInput = default;
+        [SerializeField] private EfficiencyBar efficiencyBar = default;
+        //[SerializeField] private Highlights highlights = default;
 
         private TileType currentTileType = TileType.Tree;
 
@@ -52,13 +60,13 @@ namespace ClimateManagement
                 return;
 
             popupTimer -= Time.deltaTime;
-            if (popupTimer <= 0)
+            if (popupTimer <= 0 && !tileInput.gameIsPaused)
             {
                 popupTimer = popupTime;
                 int r = UnityEngine.Random.Range(0, 6);
                 SpawnPopup();
+                OnTilePopUpComplete?.Invoke();
             }
-
             //maptimer -= Time.deltaTime;
             //if (maptimer <= 0)
             //{
@@ -81,7 +89,10 @@ namespace ClimateManagement
             tileGenerator.ReplaceTile(tree, houses[r]);
 
             List<Tile> adjTrees = tileGenerator.GetAdjacentTrees(tree);
-            for (int i = 0; i < adjTrees.Count; i++)
+            //Debug.Log("Trees: " + adjTrees.Count);
+            int randSurroundingTilesCount = Utils.GetRandomValue(0, adjTrees.Count + 1);
+            //Debug.Log("Surr: " + randSurroundingTilesCount);
+            for (int i = 0; i < randSurroundingTilesCount; i++)
             {
                 int n = Utils.GetRandomValue(0, houses.Count);
                 tileGenerator.ReplaceTile(adjTrees[i], houses[n]);
@@ -143,6 +154,11 @@ namespace ClimateManagement
                 {
                     tileGenerator.ReplaceTile(tile, tileListSO.TileTypeLists[currentTileType][r]);
                     OnTilePlaced?.Invoke(currentTileType);
+                    OnAdjacentHouseCalculated?.Invoke(tileGenerator.GetAdjacentHouses(tile).Count);
+                    //foreach (var adjTile in tileGenerator.GetAdjacentHouses(tile))
+                    //{
+                    //    highlights.InstantiatePlus(adjTile.transform.position);
+                    //}
                 }
             }
         }
@@ -152,11 +168,30 @@ namespace ClimateManagement
             if (currentTileType != newTileType)
             {
                 currentTileType = newTileType;
+                //currentTileCount = currAmount;
             }
         }
 
         private void OnTileHover(Tile tile)
         {
+            //Debug.Log("Adj Houses: " + tileGenerator.GetAdjacentHouses(tile).Count);
+            if (CursorManager.Instance.CurrCursorType == CursorType.Replace)
+            {
+                efficiencyBar.UpdateSlider(tileGenerator.GetAdjacentHouses(tile).Count);
+            }    
+        }
+
+        public int CurrentTileCount()
+        {
+            foreach (var button in placeableButtons)
+            {
+                if (currentTileType == button.TileType)
+                {
+                    return button.currAmount;
+                }
+            }
+
+            return 0;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace ClimateManagement
 		[SerializeField] private string[] monthArray = default;
 		[SerializeField] private float tweenDelay = default;
 		[SerializeField] private CooldownTimer cooldownTimer = default;
+		[SerializeField] private TextMeshProUGUI calendarYear = default;
 
 		private int currMonthCounter = 0;
 
@@ -28,8 +29,9 @@ namespace ClimateManagement
 			if (currMonthCounter == 11)
             {
 				cooldownTimer.SetYearCompleteBool(true);
-				currYear++;
+				currYear++;			
 				OnYearComplete?.Invoke(currYear);
+				calendarYear.text = $"YEAR {currYear}";
 				currMonthCounter = 0;
 				calendarDate.text = monthArray[currMonthCounter];
 			}
@@ -38,7 +40,7 @@ namespace ClimateManagement
 				calendarDate.gameObject.SetActive(false);
 				calendarFrame.transform.DOLocalRotate(new Vector3(0, 0, 360), tweenDelay
 					, RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.Linear)
-					.OnComplete(() => ChangeText());
+					.OnComplete(() => ChangeText());	
 			}
 		}
 

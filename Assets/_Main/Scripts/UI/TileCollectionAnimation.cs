@@ -27,12 +27,13 @@ namespace ClimateManagement
 
 		void Awake()
 		{
-			targetPosition = target.position;
 			originPosition = origin.localPosition;
 		}
 
-		public void Animate(int totalAmount, TileType tileType)
+        public void Animate(int totalAmount, TileType tileType)
 		{
+			targetPosition = target.position;
+
 			for (int i = 0; i < totalAmount; i++)
 			{
 				var icon = Instantiate(selectableIconPrefab, transform);

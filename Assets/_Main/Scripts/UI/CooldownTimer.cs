@@ -8,7 +8,7 @@ namespace ClimateManagement
 {
     public class CooldownTimer : MonoBehaviour
     {
-        [SerializeField] private float maxTime = default;
+        [SerializeField] private float totalTime = default;
         [SerializeField] private Image fillImage = default;
         [SerializeField] CalendarController calendarController = default;
 
@@ -51,7 +51,7 @@ namespace ClimateManagement
                 if (timerTime > 0)
                 {
                     timerTime -= Time.deltaTime;
-                    fillImage.fillAmount = timerTime / maxTime;
+                    fillImage.fillAmount = timerTime / totalTime;
                 }
                 else
                 {
@@ -72,7 +72,7 @@ namespace ClimateManagement
 
         public void StartCoolDownTimer()
         {
-            timerTime = maxTime;
+            timerTime = totalTime;
             timerIsRunning = true;
             //CursorManager.Instance.SetActiveCursorType(CursorType.CantSelect);
             //GetComponentInParent<Button>().interactable = false;

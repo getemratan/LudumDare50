@@ -60,15 +60,22 @@ namespace ClimateManagement
 
 		public void OnPointerEntered()
 		{
+			//Debug.Log("entered");
 			transform.DOScale(finalScale, tweenDelay).SetEase(Ease.Linear);
 		}
 
 		public void OnPointerExit()
 		{
+			Debug.Log("exit");
 			transform.DOScale(originalScale, tweenDelay).SetEase(Ease.Linear);
 		}
 
-		public void UpdateAmount(int value)
+        private void OnMouseOver()
+        {
+			Debug.Log("entered");
+		}
+
+        public void UpdateAmount(int value)
         {
 			currAmount += value;
 			currAmount = Mathf.Clamp(currAmount, 0, 100);

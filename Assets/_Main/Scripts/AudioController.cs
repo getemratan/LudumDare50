@@ -10,6 +10,9 @@ namespace ClimateManagement
         [SerializeField] private AudioSource sfx = default;
         [SerializeField] protected AudioClip calenderClip = default;
         [SerializeField] protected AudioClip replaceClip = default;
+        [SerializeField] protected AudioClip treePlaceClip = default;
+        [SerializeField] protected AudioClip recyclePlaceClip = default;
+        [SerializeField] protected AudioClip windmillPlaceClip = default;
 
         private void Awake()
         {
@@ -35,7 +38,18 @@ namespace ClimateManagement
 
         private void OnTilePlaced(TileType obj)
         {
-            sfx.PlayOneShot(replaceClip);
+            if (obj == TileType.Tree)
+            {
+                sfx.PlayOneShot(treePlaceClip);
+            }
+            else if (obj == TileType.Windmill)
+            {
+                sfx.PlayOneShot(windmillPlaceClip);
+            }
+            else if (obj == TileType.WasteCollection)
+            {
+                sfx.PlayOneShot(recyclePlaceClip);
+            }
         }
     }
 }
